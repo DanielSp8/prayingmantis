@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { View, StyleSheet, PanResponder } from "react-native";
-import { Card, Text, Button } from "@rneui/themed";
+import { Card, Text } from "@rneui/themed";
 import { DATA } from "../data/IdentityData";
 
 const Identity = () => {
