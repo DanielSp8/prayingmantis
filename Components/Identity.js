@@ -1,15 +1,26 @@
 import React from "react";
 import { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, PanResponder } from "react-native";
 import { Card, Text, Button } from "@rneui/themed";
 import { DATA } from "../data/IdentityData";
 
 const Identity = () => {
   const [id, setId] = useState(0);
-  // const [theme, setTheme] = useState(DATA[0].theme);
-  // const [affirmation, setAffirmation] = useState(DATA[0].affirmation);
-  // const [verse, setVerse] = useState(DATA[0].verse);
-  // const [address, setAddress] = useState(DATA[0].address);
+
+  const isLeftSwipe = ({ dx }) => dx < -200;
+  const isRightSwipe = ({ dx }) => dx > 200;
+
+  const panResponder = PanResponder.create({
+    onStartShouldSetPanResponder: () => true,
+    onPanResponderEnd: (e, gestureState) => {
+      // console.log("pan responder end", gestureState);
+      if (isLeftSwipe(gestureState)) {
+        advanceId();
+      } else if (isRightSwipe(gestureState)) {
+        prevId();
+      }
+    },
+  });
 
   const advanceId = () => {
     if (id === DATA.length - 1) {
@@ -28,19 +39,13 @@ const Identity = () => {
   };
 
   return (
-    <View>
+    <View {...panResponder.panHandlers}>
       <Card style={styles.cardItself}>
         <Card.Title style={styles.cardTitle}>{DATA[id].theme}</Card.Title>
         <Text style={styles.cardAffirmation}>{DATA[id].affirmation}</Text>
         <Text style={styles.cardVerse}>{DATA[id].verse}</Text>
         <Text style={styles.cardAddress}>{DATA[id].address}</Text>
       </Card>
-      <Button buttonStyle={styles.buttonAdvance} onPress={advanceId}>
-        Next Truth
-      </Button>
-      <Button buttonStyle={styles.buttonPrev} onPress={prevId}>
-        Previous Truth
-      </Button>
     </View>
   );
 };
@@ -66,19 +71,6 @@ const styles = StyleSheet.create({
   },
   cardAddress: {
     textAlign: "right",
-  },
-  buttonAdvance: {
-    marginHorizontal: 140,
-    borderColor: "transparent",
-    borderWidth: 0,
-    borderRadius: 30,
-    alignContent: "flex-start",
-  },
-  buttonPrev: {
-    marginHorizontal: 125,
-    borderColor: "transparent",
-    borderWidth: 0,
-    borderRadius: 30,
   },
 });
 
