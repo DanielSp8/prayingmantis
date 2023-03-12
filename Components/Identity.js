@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Card, Text, Button } from "@rneui/themed";
 import { DATA } from "../data/IdentityData";
 
@@ -29,16 +29,57 @@ const Identity = () => {
 
   return (
     <View>
-      <Card>
-        <Text>{DATA[id].theme}</Text>
-        <Text>{DATA[id].affirmation}</Text>
-        <Text>{DATA[id].verse}</Text>
-        <Text>{DATA[id].address}</Text>
+      <Card style={styles.cardItself}>
+        <Card.Title style={styles.cardTitle}>{DATA[id].theme}</Card.Title>
+        <Text style={styles.cardAffirmation}>{DATA[id].affirmation}</Text>
+        <Text style={styles.cardVerse}>{DATA[id].verse}</Text>
+        <Text style={styles.cardAddress}>{DATA[id].address}</Text>
       </Card>
-      <Button onPress={advanceId}>Next Truth</Button>
-      <Button onPress={prevId}>Previous Truth</Button>
+      <Button buttonStyle={styles.buttonAdvance} onPress={advanceId}>
+        Next Truth
+      </Button>
+      <Button buttonStyle={styles.buttonPrev} onPress={prevId}>
+        Previous Truth
+      </Button>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  cardItself: {
+    padding: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  cardTitle: {
+    color: "blue",
+  },
+  cardAffirmation: {
+    alignItems: "center",
+    alignSelf: "center",
+    justifyContent: "center",
+    color: "blue",
+  },
+  cardVerse: {
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  cardAddress: {
+    textAlign: "right",
+  },
+  buttonAdvance: {
+    marginHorizontal: 140,
+    borderColor: "transparent",
+    borderWidth: 0,
+    borderRadius: 30,
+    alignContent: "flex-start",
+  },
+  buttonPrev: {
+    marginHorizontal: 125,
+    borderColor: "transparent",
+    borderWidth: 0,
+    borderRadius: 30,
+  },
+});
 
 export default Identity;
