@@ -43,12 +43,12 @@ class Unreached extends Component {
     // console.log(unreached);
 
     var prayForTheChurch;
-    if (unreached["ProfileText"][0]["PrayForChurch"] != null) {
+
+    if (unreached["ProfileText"][0]["PrayForChurch"] !== null) {
       prayForTheChurch = unreached["ProfileText"][0]["PrayForChurch"];
-    } else if (unreached["ProfileText"][1]["PrayForChurch"] != null) {
-      prayForTheChurch = unreached["ProfileText"][1]["PrayForChurch"];
     } else {
-      prayForTheChurch = null;
+      prayForTheChurch =
+        "Pray for God to raise up a church that shines brightly as a city set on a hill.";
     }
 
     this.setState({
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     height: 200,
     borderColor: "black",
     borderWidth: 0,
-    borderStyle: "solid",
+    // borderStyle: "solid",
     flex: 2,
   },
   viewOfPeopleGroup: {
