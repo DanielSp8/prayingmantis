@@ -1,23 +1,26 @@
 import React from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet, Button, ImageBackground } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Identity from "./Components/Identity";
 import Unreached from "./Components/Unreached";
+import RandomBackImage from "./data/BackgroundImage";
 
 const HomeScreen = ({ navigation }) => {
   return (
-    <View style={styles.menuText}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Identity in Christ"
-        onPress={() => navigation.navigate("Identity")}
-      />
-      <Button
-        title="Unreached of the Day"
-        onPress={() => navigation.navigate("Unreached")}
-      />
-    </View>
+    <ImageBackground source={RandomBackImage} style={styles.backgroundImage}>
+      <View style={styles.menuText}>
+        <Text>Home Screen</Text>
+        <Button
+          title="Identity in Christ"
+          onPress={() => navigation.navigate("Identity")}
+        />
+        <Button
+          title="Unreached of the Day"
+          onPress={() => navigation.navigate("Unreached")}
+        />
+      </View>
+    </ImageBackground>
   );
 };
 
@@ -36,6 +39,14 @@ function App() {
 }
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    opacity: 0.7,
+  },
   menuText: {
     flex: 1,
     alignItems: "center",
