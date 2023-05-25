@@ -40,7 +40,9 @@ class Unreached extends Component {
     );
     var unreached = response.data[0];
 
-    // console.log(unreached);
+    console.log(unreached);
+
+    console.log(`Testing this:  ${unreached.AffinityBloc}`);
 
     var prayForTheChurch;
 
@@ -52,7 +54,7 @@ class Unreached extends Component {
     }
 
     this.setState({
-      affinity: unreached["AffinityBloc"],
+      affinity: unreached.AffinityBloc,
       audioRecordings: unreached["AudioRecordings"],
       country: unreached["Ctry"],
       continent: unreached["Continent"],

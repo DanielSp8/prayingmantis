@@ -6,6 +6,8 @@ import Identity from "./Components/Identity";
 import Unreached from "./Components/Unreached";
 import RandomBackImage from "./data/BackgroundImage";
 
+// const { MongoClient } = require("mongodb");
+
 const HomeScreen = ({ navigation }) => {
   return (
     <ImageBackground source={RandomBackImage} style={styles.backgroundImage}>
