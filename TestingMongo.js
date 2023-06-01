@@ -1,5 +1,5 @@
 const { MongoClient } = require("mongodb");
-const uri = require("../atlas_uri");
+const uri = require("./atlas_uri.js");
 
 console.log(uri);
 

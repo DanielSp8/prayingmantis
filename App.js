@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Button, ImageBackground } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import * as Animatable from "react-native-animatable";
 import Identity from "./Components/Identity";
 import Unreached from "./Components/Unreached";
 import RandomBackImage from "./data/BackgroundImage";
@@ -11,8 +12,14 @@ import RandomBackImage from "./data/BackgroundImage";
 const HomeScreen = ({ navigation }) => {
   return (
     <ImageBackground source={RandomBackImage} style={styles.backgroundImage}>
+      <Animatable.Text
+        animation="lightSpeedIn"
+        style={styles.prayingMantisTitle}
+      >
+        Praying Mantis
+      </Animatable.Text>
       <View style={styles.menuText}>
-        <Text>Home Screen</Text>
+        <Animatable.Text animation="fadeInLeft">Home Screen</Animatable.Text>
         <Button
           title="Identity in Christ"
           onPress={() => navigation.navigate("Identity")}
@@ -52,7 +59,9 @@ const styles = StyleSheet.create({
   menuText: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+  },
+  prayingMantisTitle: {
+    fontSize: 35,
   },
 });
 
