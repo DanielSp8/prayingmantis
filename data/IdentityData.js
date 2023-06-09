@@ -1,4 +1,4 @@
-export const DATA = [
+export const IdentityData = [
   {
     id: 0,
     theme: "I Am Accepted",

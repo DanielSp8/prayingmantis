@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { View, StyleSheet, PanResponder } from "react-native";
 import { Card, Text } from "@rneui/themed";
-import { DATA } from "../data/IdentityData";
+import { IdentityData } from "../data/IdentityData";
 
 const Identity = () => {
   const [id, setId] = useState(0);
