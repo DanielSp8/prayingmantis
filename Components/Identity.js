@@ -23,7 +23,7 @@ const Identity = () => {
   });
 
   const advanceId = () => {
-    if (id === DATA.length - 1) {
+    if (id === IdentityData.length - 1) {
       setId(0);
     } else {
       setId(id + 1);
@@ -32,7 +32,7 @@ const Identity = () => {
 
   const prevId = () => {
     if (id === 0) {
-      setId(DATA.length - 1);
+      setId(IdentityData.length - 1);
     } else {
       setId(id - 1);
     }
@@ -41,10 +41,14 @@ const Identity = () => {
   return (
     <View {...panResponder.panHandlers}>
       <Card style={styles.cardItself}>
-        <Card.Title style={styles.cardTitle}>{DATA[id].theme}</Card.Title>
-        <Text style={styles.cardAffirmation}>{DATA[id].affirmation}</Text>
-        <Text style={styles.cardVerse}>{DATA[id].verse}</Text>
-        <Text style={styles.cardAddress}>{DATA[id].address}</Text>
+        <Card.Title style={styles.cardTitle}>
+          {IdentityData[id].theme}
+        </Card.Title>
+        <Text style={styles.cardAffirmation}>
+          {IdentityData[id].affirmation}
+        </Text>
+        <Text style={styles.cardVerse}>{IdentityData[id].verse}</Text>
+        <Text style={styles.cardAddress}>{IdentityData[id].address}</Text>
       </Card>
     </View>
   );

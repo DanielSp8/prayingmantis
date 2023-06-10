@@ -18,10 +18,12 @@ class Acts extends Component {
     };
 
     this.generateRandomVerse = this.generateRandomVerse.bind(this);
+    this.selectDataOnClick = this.selectDataOnClick.bind(this);
   }
 
   generateRandomVerse = (verseData) => {
-    var randomNum = verseData[Math.floor(Math.random() * verseData.length) + 1];
+    console.log(`verseData: ${verseData}`);
+    let randomNum = verseData[Math.floor(Math.random() * verseData.length) + 1];
     console.log(verseData[randomNum]);
   };
 
@@ -46,7 +48,7 @@ class Acts extends Component {
             <Text>{this.state.verse}</Text>
             <Text>{this.state.address}</Text>
             <Button
-              onPress={generateRandomVerse}
+              onPress={this.selectDataOnClick}
               title={this.state.buttonText}
             />
           </View>
