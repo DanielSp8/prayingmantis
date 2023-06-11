@@ -24,6 +24,7 @@ class Acts extends Component {
   generateRandomVerse = (verseData) => {
     console.log(`verseData: ${verseData}`);
     let randomNum = verseData[Math.floor(Math.random() * verseData.length) + 1];
+    console.log(`randomNum: ${randomNum}`);
     console.log(verseData[randomNum]);
   };
 
@@ -38,6 +39,10 @@ class Acts extends Component {
       this.generateRandomVerse(AdorationData);
     }
   };
+
+  componentDidMount() {
+    this.generateRandomVerse(AdorationData);
+  }
 
   render() {
     return (

@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Button, ImageBackground } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Acts from "./Components/ACTS";
+import ActsScreen from "./Components/ActsScreen";
 import Identity from "./Components/Identity";
 import Unreached from "./Components/Unreached";
 import RandomBackImage from "./data/BackgroundImage";
@@ -36,7 +36,7 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Acts" component={Acts} />
+        <Stack.Screen name="Acts" component={ActsScreen} />
         <Stack.Screen name="Identity" component={Identity} />
         <Stack.Screen name="Unreached" component={Unreached} />
       </Stack.Navigator>
