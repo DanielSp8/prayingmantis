@@ -8,11 +8,19 @@ import { ThanksgivingData } from "../data/ThanksgivingData";
 import { SupplicationData } from "../data/SupplicationData";
 
 const ActsScreen = () => {
+  const actsData = [
+    AdorationData,
+    ConfessionData,
+    ThanksgivingData,
+    SupplicationData,
+  ];
+
   const [id, setId] = useState(0);
-  const [data, setData] = useState(AdorationData);
+  const [array, setArray] = useState(0);
+  // const [data, setData] = useState(AdorationData);
   const [theme, setTheme] = useState("Adoration");
-  const [verse, setVerse] = useState(AdorationData[0].verse);
-  const [address, setAddress] = useState(AdorationData[0].address);
+  const [verse, setVerse] = useState(actsData[array][0].verse);
+  const [address, setAddress] = useState(actsData[array][0].address);
 
   const isLeftSwipe = ({ dx }) => dx < -200;
   const isRightSwipe = ({ dx }) => dx > 200;
@@ -22,7 +30,6 @@ const ActsScreen = () => {
     onPanResponderEnd: (e, gestureState) => {
       // console.log("pan responder end", gestureState);
       if (isLeftSwipe(gestureState)) {
-        // selectTheme();
         selectTheme();
       } else if (isRightSwipe(gestureState)) {
         prevId();
@@ -31,21 +38,21 @@ const ActsScreen = () => {
   });
 
   const selectTheme = () => {
-    switch (data) {
-      case AdorationData:
-        setData(ConfessionData);
+    switch (array) {
+      case 0:
+        setArray(1);
         setTheme("Confession");
         break;
-      case ConfessionData:
-        setData(ThanksgivingData);
+      case 1:
+        setArray(2);
         setTheme("Thanksgiving");
         break;
-      case ThanksgivingData:
-        setData(SupplicationData);
+      case 2:
+        setArray(3);
         setTheme("Supplication");
         break;
-      case SupplicationData:
-        setData(AdorationData);
+      case 3:
+        setArray(0);
         setTheme("Adoration");
         break;
       default:
@@ -58,7 +65,9 @@ const ActsScreen = () => {
 
   const randomUpId = () => {
     // console.log(data);
-    let randomNum = Math.floor(Math.random() * data.length - 1) + 1;
+    let randomNum = Math.floor(Math.random() * actsData[array].length - 1) + 1;
+    console.log(`actsData[array]: ${array}`);
+    console.log(`actsData[array].length - 1 = ${actsData[array].length - 1}`);
     console.log(randomNum);
     return randomNum;
   };
@@ -67,8 +76,8 @@ const ActsScreen = () => {
     <View {...panResponder.panHandlers}>
       <Card style={styles.cardItself}>
         <Card.Title style={styles.cardTitle}>{theme}</Card.Title>
-        <Text style={styles.cardVerse}>{data[id].verse}</Text>
-        <Text style={styles.cardAddress}>{data[id].address}</Text>
+        <Text style={styles.cardVerse}>{actsData[array][id].verse}</Text>
+        <Text style={styles.cardAddress}>{actsData[array][id].address}</Text>
       </Card>
     </View>
   );

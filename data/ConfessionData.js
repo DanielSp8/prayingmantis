@@ -34,4 +34,24 @@ export const ConfessionData = [
       "Draw near to God and He will draw near to you. Cleanse your hands, you sinners; and purify your hearts, you double-minded.",
     address: "James 4:8",
   },
+  {
+    id: 5,
+    theme: "Confession",
+    verse:
+      "But God's firm foundation stands, bearing this seal: “The Lord knows those who are his,” and, “Let everyone who names the name of the Lord depart from iniquity.",
+    address: "2 Timothy 2:19",
+  },
+  {
+    id: 6,
+    theme: "Confession",
+    verse:
+      "So it shall be when he becomes guilty in one of these, that he shall confess that in which he has sinned.",
+    address: "Leviticus 5:5",
+  },
+  {
+    id: 7,
+    theme: "Confession",
+    verse: "For I confess my iniquity; I am full of anxiety because of my sin.",
+    address: "Psalm 38:18",
+  },
 ];
