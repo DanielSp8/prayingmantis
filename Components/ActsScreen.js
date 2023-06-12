@@ -15,12 +15,9 @@ const ActsScreen = () => {
     SupplicationData,
   ];
 
-  const [id, setId] = useState(0);
   const [array, setArray] = useState(0);
-  // const [data, setData] = useState(AdorationData);
+  const [id, setId] = useState(0);
   const [theme, setTheme] = useState("Adoration");
-  const [verse, setVerse] = useState(actsData[array][0].verse);
-  const [address, setAddress] = useState(actsData[array][0].address);
 
   const isLeftSwipe = ({ dx }) => dx < -200;
   const isRightSwipe = ({ dx }) => dx > 200;
@@ -30,14 +27,14 @@ const ActsScreen = () => {
     onPanResponderEnd: (e, gestureState) => {
       // console.log("pan responder end", gestureState);
       if (isLeftSwipe(gestureState)) {
-        selectTheme();
+        selectThemeForward();
       } else if (isRightSwipe(gestureState)) {
-        prevId();
+        selectThemeBackward();
       }
     },
   });
 
-  const selectTheme = () => {
+  const selectThemeForward = () => {
     switch (array) {
       case 0:
         setArray(1);
@@ -54,6 +51,32 @@ const ActsScreen = () => {
       case 3:
         setArray(0);
         setTheme("Adoration");
+        break;
+      default:
+        console.log("Default case...");
+    }
+    let randomNumber = randomUpId();
+    console.log(`randomNumber: ${randomNumber}`);
+    setId(randomNumber);
+  };
+
+  const selectThemeBackward = () => {
+    switch (array) {
+      case 0:
+        setArray(3);
+        setTheme("Supplication");
+        break;
+      case 1:
+        setArray(0);
+        setTheme("Adoration");
+        break;
+      case 2:
+        setArray(1);
+        setTheme("Confession");
+        break;
+      case 3:
+        setArray(2);
+        setTheme("Thanksgiving");
         break;
       default:
         console.log("Default case...");
