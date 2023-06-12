@@ -25,7 +25,6 @@ const ActsScreen = () => {
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onPanResponderEnd: (e, gestureState) => {
-      // console.log("pan responder end", gestureState);
       if (isLeftSwipe(gestureState)) {
         selectThemeForward();
       } else if (isRightSwipe(gestureState)) {
@@ -52,11 +51,8 @@ const ActsScreen = () => {
         setArray(0);
         setTheme("Adoration");
         break;
-      default:
-        console.log("Default case...");
     }
     let randomNumber = randomUpId();
-    console.log(`randomNumber: ${randomNumber}`);
     setId(randomNumber);
   };
 
@@ -78,20 +74,13 @@ const ActsScreen = () => {
         setArray(2);
         setTheme("Thanksgiving");
         break;
-      default:
-        console.log("Default case...");
     }
     let randomNumber = randomUpId();
-    console.log(`randomNumber: ${randomNumber}`);
     setId(randomNumber);
   };
 
   const randomUpId = () => {
-    // console.log(data);
     let randomNum = Math.floor(Math.random() * actsData[array].length - 1) + 1;
-    console.log(`actsData[array]: ${array}`);
-    console.log(`actsData[array].length - 1 = ${actsData[array].length - 1}`);
-    console.log(randomNum);
     return randomNum;
   };
 
