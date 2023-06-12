@@ -191,7 +191,7 @@ export const IdentityData = [
     theme: "I Am Secure",
     affirmation: "I am born of God and the evil one cannot touch me.",
     verse:
-      " We know that no one who is born of God sins; but He who was born of God keeps him, and the evil one does not touch him.",
+      "We know that no one who is born of God sins; but He who was born of God keeps him, and the evil one does not touch him.",
     address: "1 John 5:18",
     fileName: "",
   },

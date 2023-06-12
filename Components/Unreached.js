@@ -22,12 +22,9 @@ class Unreached extends Component {
       peopleGroupPhoto: "",
       peopleNameInCountry: "",
       primaryReligion: "",
-      howReach: "",
-      obstacles: "",
-      prayForChurch: "",
-      prayForPG: "",
-      scriptureFocus: "",
       summary: "",
+      tenfortywindow: "",
+      photoCredit: "",
       shouldShow: false,
     };
 
@@ -42,30 +39,32 @@ class Unreached extends Component {
 
     // console.log(unreached);
 
-    var prayForTheChurch;
+    var tenFortyWindowInfo;
+    var photoCredit;
+    var audioInfo;
 
-    if (unreached["ProfileText"][0]["PrayForChurch"] !== null) {
-      prayForTheChurch = unreached["ProfileText"][0]["PrayForChurch"];
-    } else {
-      prayForTheChurch =
-        "Pray for God to raise up a church that shines brightly as a city set on a hill.";
-    }
+    unreached.Window1040 == "Y"
+      ? (tenFortyWindowInfo = "Yes")
+      : (tenFortyWindowInfo = "No");
+
+    unreached.PhotoCopyright == "Y"
+      ? (photoCredit = `Photo Credit:  ${unreached.PhotoCredits}`)
+      : (photoCredit = "");
+
+    unreached.AudioRecordings == "Y" ? (audioInfo = "Yes") : (audioInfo = "No");
 
     this.setState({
-      affinity: unreached["AffinityBloc"],
-      audioRecordings: unreached["AudioRecordings"],
-      country: unreached["Ctry"],
-      continent: unreached["Continent"],
-      language: unreached["OfficialLang"],
-      peopleNameInCountry: unreached["PeopNameInCountry"],
-      peopleGroupPhoto: unreached["PeopleGroupPhotoURL"],
-      primaryReligion: unreached["PrimaryReligion"],
-      howReach: unreached["ProfileText"][0]["HowReach"],
-      obstacles: unreached["ProfileText"][0]["Obstacles"],
-      prayForChurch: prayForTheChurch,
-      prayForPG: unreached["ProfileText"][0]["PrayForPG"],
-      scriptureFocus: unreached["ProfileText"][0]["ScriptureFocus"],
-      summary: unreached["ProfileText"][0]["Summary"],
+      affinity: unreached.AffinityBloc,
+      audioRecordings: audioInfo,
+      country: unreached.Ctry,
+      continent: unreached.Continent,
+      language: unreached.OfficialLang,
+      peopleNameInCountry: unreached.PeopNameInCountry,
+      peopleGroupPhoto: unreached.PeopleGroupPhotoURL,
+      primaryReligion: unreached.PrimaryReligion,
+      summary: unreached.Summary,
+      tenfortywindow: tenFortyWindowInfo,
+      photoCredit: photoCredit,
       shouldShow: true,
     });
   };
@@ -90,19 +89,14 @@ class Unreached extends Component {
               >
                 {this.state.country} in {this.state.continent}
               </Text>
+              <Text>{this.state.peopleNameInCountry}</Text>
               <Image
                 style={styles.imageStyle}
                 resizeMode="contain"
                 source={{ uri: this.state.peopleGroupPhoto }}
               />
-              <Text
-                style={styles.peopleNameInCountry}
-                name="peopleNameInCountry"
-              >
-                {this.state.peopleNameInCountry}
-              </Text>
             </View>
-
+            <Text style={styles.photoCredit}>{this.state.photoCredit}</Text>
             <Card.Divider />
             <Text style={styles.subHeading} name="languageText">
               Official Language:{" "}
@@ -116,44 +110,22 @@ class Unreached extends Component {
             </Text>
             <Card.Divider />
 
-            <Text style={styles.headings} name="scriptureFocusText">
-              Scripture Focus:
-            </Text>
-            <Text style={styles.scriptureFocusText}>
-              {this.state.scriptureFocus}
-            </Text>
-            <Card.Divider />
-
             <Text style={styles.headings} name="summaryText">
               Summary:
             </Text>
             <Text style={styles.summaryText}>{this.state.summary}</Text>
             <Card.Divider />
 
-            <Text style={styles.headings} name="evangelismHeading">
-              Evangelism/Outreach:
+            <Text style={styles.headings} name="infoHeading">
+              Other Information:
             </Text>
-            <Text style={styles.subHeading} name="obstacles">
-              Obstacles:{" "}
-              <Text style={styles.blockText}>{this.state.obstacles}</Text>
+            <Text style={styles.infoStyle} name="windowTenForty">
+              In the 10/40 Window? {this.state.tenfortywindow}
             </Text>
-            <Text style={styles.subHeading} name="howReach">
-              Ideas of How to Reach Them:{" "}
-              <Text style={styles.blockText}>{this.state.howReach}</Text>
+            <Text style={styles.infoStyle} name="audioInfo">
+              Bible Audio Recordings? {this.state.audioRecordings}
             </Text>
-            <Card.Divider />
 
-            <Text style={styles.headings} name="prayerHeading">
-              Praying/Intercession:
-            </Text>
-            <Text style={styles.subHeading} name="prayForChurch">
-              Pray for the Church:{" "}
-              <Text style={styles.blockText}>{this.state.prayForChurch}</Text>
-            </Text>
-            <Text style={styles.subHeading} name="prayForPG">
-              Pray for this People Group:{" "}
-              <Text style={styles.blockText}>{this.state.prayForPG}</Text>
-            </Text>
             <Card.Divider />
           </Card>
         )}
@@ -183,14 +155,14 @@ const styles = StyleSheet.create({
   headings: {
     alignSelf: "center",
     fontWeight: "bold",
-  },
-  scriptureFocusText: {
-    fontSize: 14,
-    color: "black",
+    color: "blue",
   },
   summaryText: {
     fontSize: 14,
     color: "black",
+  },
+  infoStyle: {
+    textAlign: "center",
   },
   peopleNameInCountry: {
     fontSize: 14,
@@ -214,6 +186,10 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     // borderStyle: "solid",
     flex: 2,
+  },
+  photoCredit: {
+    position: "relative",
+    textAlign: "center",
   },
   viewOfPeopleGroup: {
     position: "relative",
