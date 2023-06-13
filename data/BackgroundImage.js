@@ -13,6 +13,6 @@ const BackgroundImages = [
 ];
 
 const RandomBackImage =
-  BackgroundImages[Math.floor(Math.random() * BackgroundImages.length) + 1];
+  BackgroundImages[Math.floor(Math.random() * BackgroundImages.length - 1) + 1];
 
 export default RandomBackImage;

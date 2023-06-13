@@ -37,8 +37,6 @@ class Unreached extends Component {
     );
     var unreached = response.data[0];
 
-    // console.log(unreached);
-
     var tenFortyWindowInfo;
     var photoCredit;
     var audioInfo;
@@ -82,29 +80,28 @@ class Unreached extends Component {
               <Text style={styles.headingText}>
                 Daily Unreached People Group
               </Text>
-              <Text style={styles.subHeading}>Location: </Text>
-              <Text
-                style={styles.countryContinentText}
-                name="countryContinentText"
-              >
+              <Text style={styles.headings}>Location: </Text>
+              <Text style={styles.regularText} name="countryContinentText">
                 {this.state.country} in {this.state.continent}
               </Text>
-              <Text>{this.state.peopleNameInCountry}</Text>
+              <Text style={styles.regularText}>
+                {this.state.peopleNameInCountry}
+              </Text>
               <Image
                 style={styles.imageStyle}
                 resizeMode="contain"
                 source={{ uri: this.state.peopleGroupPhoto }}
               />
             </View>
-            <Text style={styles.photoCredit}>{this.state.photoCredit}</Text>
+            <Text style={styles.infoStyle}>{this.state.photoCredit}</Text>
             <Card.Divider />
-            <Text style={styles.subHeading} name="languageText">
+            <Text style={styles.headings} name="languageText">
               Official Language:{" "}
-              <Text style={styles.languageText}>{this.state.language}</Text>
+              <Text style={styles.regularText}>{this.state.language}</Text>
             </Text>
-            <Text style={styles.subHeading} name="primaryReligion">
+            <Text style={styles.headings} name="primaryReligion">
               Primary Religion:{" "}
-              <Text style={styles.primaryReligion}>
+              <Text style={styles.regularText}>
                 {this.state.primaryReligion}
               </Text>
             </Text>
@@ -113,7 +110,7 @@ class Unreached extends Component {
             <Text style={styles.headings} name="summaryText">
               Summary:
             </Text>
-            <Text style={styles.summaryText}>{this.state.summary}</Text>
+            <Text style={styles.regularText}>{this.state.summary}</Text>
             <Card.Divider />
 
             <Text style={styles.headings} name="infoHeading">
@@ -125,8 +122,6 @@ class Unreached extends Component {
             <Text style={styles.infoStyle} name="audioInfo">
               Bible Audio Recordings? {this.state.audioRecordings}
             </Text>
-
-            <Card.Divider />
           </Card>
         )}
       </ScrollView>
@@ -149,62 +144,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  subHeading: {
-    color: "blue",
-  },
   headings: {
     alignSelf: "center",
     fontWeight: "bold",
     color: "blue",
   },
-  summaryText: {
+  regularText: {
     fontSize: 14,
     color: "black",
   },
   infoStyle: {
+    color: "black",
     textAlign: "center",
-  },
-  peopleNameInCountry: {
-    fontSize: 14,
-    color: "black",
-  },
-  affinityText: {
-    fontSize: 16,
-    color: "black",
-  },
-  countryContinentText: {
-    fontSize: 15,
-    color: "black",
-    alignItems: "center",
-    position: "relative",
-    justifyContent: "center",
   },
   imageStyle: {
     width: "100%",
     height: 200,
     borderColor: "black",
-    borderWidth: 0,
-    // borderStyle: "solid",
+    borderWidth: 1,
+    borderStyle: "solid",
     flex: 2,
-  },
-  photoCredit: {
-    position: "relative",
-    textAlign: "center",
-  },
-  viewOfPeopleGroup: {
-    position: "relative",
-    alignItems: "center",
-  },
-  languageText: {
-    fontSize: 12,
-    color: "black",
-  },
-  primaryReligion: {
-    fontSize: 12,
-    color: "black",
-  },
-  blockText: {
-    color: "black",
   },
 });
 
