@@ -159,10 +159,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   imageStyle: {
-    // width: "100%",
+    width: "100%",
     height: 200,
     borderColor: "black",
-    borderWidth: 1,
+    borderWidth: 0,
     flex: 2,
   },
 });
