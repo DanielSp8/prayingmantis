@@ -50,6 +50,9 @@ const Identity = () => {
         <Text style={styles.cardVerse}>{IdentityData[id].verse}</Text>
         <Text style={styles.cardAddress}>{IdentityData[id].address}</Text>
       </Card>
+      <Text style={styles.swipeComment}>
+        Swipe left or right on the above card to view a different one.
+      </Text>
     </View>
   );
 };
@@ -75,6 +78,10 @@ const styles = StyleSheet.create({
   },
   cardAddress: {
     textAlign: "right",
+  },
+  swipeComment: {
+    textAlign: "center",
+    fontSize: 12,
   },
 });
 
