@@ -17,66 +17,33 @@ const ActsScreen = () => {
 
   const [array, setArray] = useState(0);
   const [id, setId] = useState(0);
-  const [theme, setTheme] = useState("Adoration");
 
   const isLeftSwipe = ({ dx }) => dx < -200;
   const isRightSwipe = ({ dx }) => dx > 200;
+
+  let increaseOrDecreaseArray = 0;
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onPanResponderEnd: (e, gestureState) => {
       if (isLeftSwipe(gestureState)) {
-        selectThemeForward();
+        increaseOrDecreaseArray = 1;
       } else if (isRightSwipe(gestureState)) {
-        selectThemeBackward();
+        increaseOrDecreaseArray = -1;
       }
+      newThemeChanged();
     },
   });
 
-  const selectThemeForward = () => {
-    switch (array) {
-      case 0:
-        setArray(1);
-        setTheme("Confession");
-        break;
-      case 1:
-        setArray(2);
-        setTheme("Thanksgiving");
-        break;
-      case 2:
-        setArray(3);
-        setTheme("Supplication");
-        break;
-      case 3:
-        setArray(0);
-        setTheme("Adoration");
-        break;
+  const newThemeChanged = () => {
+    if (array + increaseOrDecreaseArray > actsData.length - 1) {
+      setArray(0);
+    } else if (array + increaseOrDecreaseArray < 0) {
+      setArray(3);
+    } else {
+      setArray(array + increaseOrDecreaseArray);
     }
-    let randomNumber = randomUpId();
-    setId(randomNumber);
-  };
-
-  const selectThemeBackward = () => {
-    switch (array) {
-      case 0:
-        setArray(3);
-        setTheme("Supplication");
-        break;
-      case 1:
-        setArray(0);
-        setTheme("Adoration");
-        break;
-      case 2:
-        setArray(1);
-        setTheme("Confession");
-        break;
-      case 3:
-        setArray(2);
-        setTheme("Thanksgiving");
-        break;
-    }
-    let randomNumber = randomUpId();
-    setId(randomNumber);
+    setId(randomUpId());
   };
 
   const randomUpId = () => {
@@ -87,7 +54,9 @@ const ActsScreen = () => {
   return (
     <View {...panResponder.panHandlers}>
       <Card style={styles.cardItself}>
-        <Card.Title style={styles.cardTitle}>{theme}</Card.Title>
+        <Card.Title style={styles.cardTitle}>
+          {actsData[array][id].theme}
+        </Card.Title>
         <Text style={styles.cardVerse}>{actsData[array][id].verse}</Text>
         <Text style={styles.cardAddress}>{actsData[array][id].address}</Text>
       </Card>
