@@ -152,17 +152,17 @@ const styles = StyleSheet.create({
   regularText: {
     fontSize: 14,
     color: "black",
+    textAlign: "center",
   },
   infoStyle: {
     color: "black",
     textAlign: "center",
   },
   imageStyle: {
-    width: "100%",
+    // width: "100%",
     height: 200,
     borderColor: "black",
     borderWidth: 1,
-    borderStyle: "solid",
     flex: 2,
   },
 });
