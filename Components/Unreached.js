@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "black",
     alignSelf: "center",
-    fontSize: 22,
+    fontSize: 24,
   },
   container: {
     flex: 1,
