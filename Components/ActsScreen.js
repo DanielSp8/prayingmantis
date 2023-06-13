@@ -2,10 +2,11 @@ import React from "react";
 import { useState } from "react";
 import { View, StyleSheet, PanResponder, Button } from "react-native";
 import { Card, Text } from "@rneui/themed";
-import { AdorationData } from "../data/AdorationData";
-import { ConfessionData } from "../data/ConfessionData";
-import { ThanksgivingData } from "../data/ThanksgivingData";
-import { SupplicationData } from "../data/SupplicationData";
+import { AdorationData } from "../docs/AdorationData";
+import { ConfessionData } from "../docs/ConfessionData";
+import { ThanksgivingData } from "../docs/ThanksgivingData";
+import { SupplicationData } from "../docs/SupplicationData";
+import { ActsExplained } from "../docs/ActsExplained";
 
 const ActsScreen = () => {
   const actsData = [
@@ -57,6 +58,10 @@ const ActsScreen = () => {
         <Card.Title style={styles.cardTitle}>
           {actsData[array][id].theme}
         </Card.Title>
+        <Text>{ActsExplained[array]}</Text>
+      </Card>
+      <Card style={styles.cardItself}>
+        <Card.Title style={styles.cardTitle}>Verse:</Card.Title>
         <Text style={styles.cardVerse}>{actsData[array][id].verse}</Text>
         <Text style={styles.cardAddress}>{actsData[array][id].address}</Text>
       </Card>
@@ -74,12 +79,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   cardTitle: {
-    color: "blue",
-  },
-  cardAffirmation: {
-    alignItems: "center",
-    alignSelf: "center",
-    justifyContent: "center",
     color: "blue",
   },
   cardVerse: {

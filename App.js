@@ -6,7 +6,7 @@ import ActsScreen from "./Components/ActsScreen";
 import * as Animatable from "react-native-animatable";
 import Identity from "./Components/Identity";
 import Unreached from "./Components/Unreached";
-import RandomBackImage from "./data/BackgroundImage";
+import RandomBackImage from "./docs/BackgroundImage";
 
 // const { MongoClient } = require("mongodb");
 
