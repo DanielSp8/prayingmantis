@@ -10,7 +10,7 @@ import {
 import { Card } from "@rneui/themed";
 import JoshuaProject from "../src/api/JoshuaProject";
 
-class Unreached extends Component {
+class UnreachedScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -167,4 +167,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Unreached;
+export default UnreachedScreen;

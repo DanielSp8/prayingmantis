@@ -66,7 +66,8 @@ const ActsScreen = () => {
         <Text style={styles.cardAddress}>{actsData[array][id].address}</Text>
       </Card>
       <Text style={styles.swipeComment}>
-        Swipe left or right on the above card to view a different one.
+        Swipe left or right on either of the above cards to view a different
+        one.
       </Text>
     </View>
   );

@@ -3,8 +3,9 @@ import { useState } from "react";
 import { View, StyleSheet, PanResponder } from "react-native";
 import { Card, Text } from "@rneui/themed";
 import { IdentityData } from "../docs/IdentityData";
+import { IdentityExplained } from "../docs/IdentityExplained";
 
-const Identity = () => {
+const IdentityScreen = () => {
   const [id, setId] = useState(0);
 
   const isLeftSwipe = ({ dx }) => dx < -200;
@@ -40,6 +41,9 @@ const Identity = () => {
 
   return (
     <View {...panResponder.panHandlers}>
+      <Card style={styles.explanationCard}>
+        <Text style={styles.explanationText}>{IdentityExplained}</Text>
+      </Card>
       <Card style={styles.cardItself}>
         <Card.Title style={styles.cardTitle}>
           {IdentityData[id].theme}
@@ -58,6 +62,13 @@ const Identity = () => {
 };
 
 const styles = StyleSheet.create({
+  explanationCard: {
+    padding: 0,
+    justifyContent: "space-evenly",
+  },
+  explanationText: {
+    fontSize: 16,
+  },
   cardItself: {
     padding: 10,
     alignItems: "center",
@@ -85,4 +96,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Identity;
+export default IdentityScreen;
