@@ -60,6 +60,9 @@ const ActsScreen = () => {
         <Text style={styles.cardVerse}>{actsData[array][id].verse}</Text>
         <Text style={styles.cardAddress}>{actsData[array][id].address}</Text>
       </Card>
+      <Text style={styles.swipeComment}>
+        Swipe left or right on the above card to view a different one.
+      </Text>
     </View>
   );
 };
@@ -85,6 +88,10 @@ const styles = StyleSheet.create({
   },
   cardAddress: {
     textAlign: "right",
+  },
+  swipeComment: {
+    textAlign: "center",
+    fontSize: 12,
   },
 });
 
