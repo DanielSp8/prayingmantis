@@ -48,8 +48,7 @@ const ActsScreen = () => {
   };
 
   const randomUpId = () => {
-    let randomNum = Math.floor(Math.random() * actsData[array].length - 1) + 1;
-    return randomNum;
+    return Math.floor(Math.random() * actsData[array].length - 1) + 1;
   };
 
   return (
