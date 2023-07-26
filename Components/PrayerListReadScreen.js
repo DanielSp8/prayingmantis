@@ -15,7 +15,10 @@ class PrayerListReadScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      prayerRequests: ["prayer requests", "listed here"],
+      prayerTheme: "",
+      prayerRequest01: "",
+      prayerRequest02: "",
+      prayerRequest03: "",
     };
 
     this.getPrayerListData = this.getPrayerListData.bind(this);
@@ -28,7 +31,10 @@ class PrayerListReadScreen extends Component {
     console.log(prayerListInfo);
 
     this.setState({
-      prayerRequests: prayerListInfo.prayerRequests,
+      prayerTheme: prayerListInfo.prayerRequests[0],
+      prayerRequest01: prayerListInfo.prayerRequests[1],
+      prayerRequest02: prayerListInfo.prayerRequests[2],
+      prayerRequest03: prayerListInfo.prayerRequests[3],
     });
   };
 
@@ -41,9 +47,17 @@ class PrayerListReadScreen extends Component {
       <ScrollView>
         <Card>
           <View>
-            <Text style={styles.userText}>{this.state.userName}</Text>
+            <Text style={styles.textHeading}>
+              Person to pray for: {this.state.prayerTheme}
+            </Text>
             <Text style={styles.prayerListText}>
-              {this.state.prayerRequests}
+              {this.state.prayerRequest01}
+            </Text>
+            <Text style={styles.prayerListText}>
+              {this.state.prayerRequest02}
+            </Text>
+            <Text style={styles.prayerListText}>
+              {this.state.prayerRequest03}
             </Text>
           </View>
         </Card>
@@ -53,9 +67,14 @@ class PrayerListReadScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  textHeading: {
+    color: "black",
+    fontSize: 20,
+    textAlign: "center",
+  },
   prayerListText: {
     color: "blue",
-    fontSize: 26,
+    fontSize: 15,
   },
 });
 
