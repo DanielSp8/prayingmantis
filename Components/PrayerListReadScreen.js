@@ -15,7 +15,6 @@ class PrayerListReadScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: "",
       prayerRequests: ["prayer requests", "listed here"],
     };
 
@@ -23,24 +22,14 @@ class PrayerListReadScreen extends Component {
   }
 
   getPrayerListData = async () => {
-    axios
-      .get("http://192.168.1.184:3000/prayerlists")
-      .then((response) => {
-        //test this data out.
-        console.log(response.data);
-        console.log(
-          `response.data.prayerRequests: ${response.data.prayerRequests}`
-        );
-        this.setState({
-          userName: response.data.user,
-          prayerRequests: response.data.prayerRequests,
-        });
-        console.log(`this.userName: ${this.userName}`);
-        console.log(`this.prayerRequests: ${this.prayerRequests}`);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    const response = await ReadPrayerList.get("/prayerlists");
+
+    var prayerListInfo = response.data[0];
+    console.log(prayerListInfo);
+
+    this.setState({
+      prayerRequests: prayerListInfo.prayerRequests,
+    });
   };
 
   componentDidMount() {
@@ -64,10 +53,6 @@ class PrayerListReadScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  userText: {
-    color: "black",
-    fontSize: 24,
-  },
   prayerListText: {
     color: "blue",
     fontSize: 26,
