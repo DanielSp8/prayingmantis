@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Button, ImageBackground } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as Animatable from "react-native-animatable";
+import PrayerListReadScreen from "./Components/PrayerListReadScreen";
 import ActsScreen from "./Components/ActsScreen";
 import IdentityScreen from "./Components/IdentityScreen";
 import UnreachedScreen from "./Components/UnreachedScreen";
@@ -19,6 +20,11 @@ const HomeScreen = ({ navigation }) => {
       </Animatable.Text>
       <View style={styles.menuText}>
         <Animatable.Text animation="fadeInLeft">Home Screen</Animatable.Text>
+
+        <Button
+          title="Read Prayer List"
+          onPress={() => navigation.navigate("PrayerList")}
+        />
         <Button
           title="ACTS: Prayer Acronym"
           onPress={() => navigation.navigate("Acts")}
@@ -43,6 +49,7 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="PrayerList" component={PrayerListReadScreen} />
         <Stack.Screen name="Acts" component={ActsScreen} />
         <Stack.Screen name="Identity" component={IdentityScreen} />
         <Stack.Screen name="Unreached" component={UnreachedScreen} />
