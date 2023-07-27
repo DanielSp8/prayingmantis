@@ -16,13 +16,24 @@ class PrayerListReadScreen extends Component {
     super(props);
     this.state = {
       prayerTheme: "",
-      prayerRequest01: "",
-      prayerRequest02: "",
-      prayerRequest03: "",
+      prayerList: [],
     };
 
     this.getPrayerListData = this.getPrayerListData.bind(this);
+    this.getPrayersToDisplay = this.getPrayersToDisplay.bind(this);
   }
+
+  getPrayersToDisplay = (array) => {
+    var i = 1;
+
+    return array.map((element) => {
+      return (
+        <View key={i++}>
+          <Text style={styles.prayerListText}>{element}</Text>
+        </View>
+      );
+    });
+  };
 
   getPrayerListData = async () => {
     const response = await ReadPrayerList.get("/prayerlists");
@@ -30,11 +41,12 @@ class PrayerListReadScreen extends Component {
     var prayerListInfo = response.data[0];
     console.log(prayerListInfo);
 
+    var prayerInfo = prayerListInfo.prayerRequests[0];
+    var prayerThemeInfo = prayerInfo.shift();
+
     this.setState({
-      prayerTheme: prayerListInfo.prayerRequests[0],
-      prayerRequest01: prayerListInfo.prayerRequests[1],
-      prayerRequest02: prayerListInfo.prayerRequests[2],
-      prayerRequest03: prayerListInfo.prayerRequests[3],
+      prayerTheme: prayerThemeInfo,
+      prayerList: prayerInfo,
     });
   };
 
@@ -50,15 +62,7 @@ class PrayerListReadScreen extends Component {
             <Text style={styles.textHeading}>
               Person to pray for: {this.state.prayerTheme}
             </Text>
-            <Text style={styles.prayerListText}>
-              {this.state.prayerRequest01}
-            </Text>
-            <Text style={styles.prayerListText}>
-              {this.state.prayerRequest02}
-            </Text>
-            <Text style={styles.prayerListText}>
-              {this.state.prayerRequest03}
-            </Text>
+            {this.getPrayersToDisplay(this.state.prayerList)}
           </View>
         </Card>
       </ScrollView>
@@ -70,6 +74,11 @@ const styles = StyleSheet.create({
   textHeading: {
     color: "black",
     fontSize: 20,
+    textAlign: "center",
+  },
+  prayerListTextHeading: {
+    color: "green",
+    fontSize: 18,
     textAlign: "center",
   },
   prayerListText: {
