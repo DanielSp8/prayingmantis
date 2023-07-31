@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as Animatable from "react-native-animatable";
 import PrayerListReadScreen from "./Components/PrayerListReadScreen";
+// import PrayerListScreen from "./Components/PrayerListScreen";
 import ActsScreen from "./Components/ActsScreen";
 import IdentityScreen from "./Components/IdentityScreen";
 import UnreachedScreen from "./Components/UnreachedScreen";
@@ -22,7 +23,7 @@ const HomeScreen = ({ navigation }) => {
         <Animatable.Text animation="fadeInLeft">Home Screen</Animatable.Text>
 
         <Button
-          title="Read Prayer List"
+          title="Prayer List"
           onPress={() => navigation.navigate("PrayerList")}
         />
         <Button
