@@ -17,7 +17,7 @@ class PrayerListReadScreen extends Component {
     this.state = {
       prayerTheme: "",
       prayerList: [],
-      onNumOfPrayerRequests: 0,
+      numOfPrayerRequests: 0,
       currentPrayerRequestNum: 0,
     };
 
@@ -25,6 +25,8 @@ class PrayerListReadScreen extends Component {
     this.getPrayersToDisplay = this.getPrayersToDisplay.bind(this);
     this.skipToTheNextPrayerRequest =
       this.skipToTheNextPrayerRequest.bind(this);
+    this.skipToThePreviousPrayerRequest =
+      this.skipToThePreviousPrayerRequest.bind(this);
   }
 
   getPrayersToDisplay = (array) => {
@@ -44,7 +46,7 @@ class PrayerListReadScreen extends Component {
 
     let prayerListInfo = response.data[0];
 
-    let prayerRequestsNum = prayerListInfo.prayerRequests.length;
+    let prayerRequestsNum = prayerListInfo.prayerRequests.length - 1;
 
     let prayerInfo =
       prayerListInfo.prayerRequests[this.state.currentPrayerRequestNum];
@@ -53,25 +55,42 @@ class PrayerListReadScreen extends Component {
     this.setState({
       prayerTheme: prayerThemeInfo,
       prayerList: prayerInfo,
-      onNumOfPrayerRequests: prayerRequestsNum,
-      currentPrayerRequestNum: this.state.currentPrayerRequestNum + 1,
+      numOfPrayerRequests: prayerRequestsNum,
+      // currentPrayerRequestNum: this.state.currentPrayerRequestNum + 1,
     });
+    console.log(`this.state.prayerTheme: ${this.state.prayerTheme}`);
+    console.log(`this.state.prayerList: ${this.state.prayerList}`);
+    console.log(
+      `this.state.numOfPrayerRequests: ${this.state.numOfPrayerRequests}`
+    );
+    console.log(
+      `this.state.currentPrayerRequestNum: ${this.state.currentPrayerRequestNum}`
+    );
   };
 
   skipToTheNextPrayerRequest = () => {
-    if (
-      this.state.onNumOfPrayerRequests == this.state.currentPrayerRequestNum
-    ) {
-      console.log(
-        `You've prayed through the prayer requests... {$this.state.onNumOfPrayerRequests}`
-      );
-    } else if (
-      this.state.onNumOfPrayerRequests > this.state.currentPrayerRequestNum
-    ) {
+    if (this.state.numOfPrayerRequests > this.state.currentPrayerRequestNum) {
       this.setState({
-        onNumOfPrayerRequests: this.state.onNumOfPrayerRequests + 1,
+        currentPrayerRequestNum: this.state.currentPrayerRequestNum + 1,
       });
       this.getPrayerListData();
+    } else {
+      console.log(
+        `You've prayed through the prayer requests... ${this.state.currentPrayerRequestNum}`
+      );
+    }
+  };
+
+  skipToThePreviousPrayerRequest = () => {
+    if (this.state.currentPrayerRequestNum > 0) {
+      this.setState({
+        currentPrayerRequestNum: this.state.currentPrayerRequestNum - 1,
+      });
+      this.getPrayerListData();
+    } else {
+      console.log(
+        `You're at the beginning of your prayer requests: ${this.state.currentPrayerRequestNum}`
+      );
     }
   };
 
@@ -92,6 +111,10 @@ class PrayerListReadScreen extends Component {
           <Button
             title="Next Prayer Request"
             onPress={this.skipToTheNextPrayerRequest}
+          />
+          <Button
+            title="Previous Prayer Request"
+            onPress={this.skipToThePreviousPrayerRequest}
           />
         </Card>
       </ScrollView>
