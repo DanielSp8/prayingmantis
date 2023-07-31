@@ -56,16 +56,7 @@ class PrayerListReadScreen extends Component {
       prayerTheme: prayerThemeInfo,
       prayerList: prayerInfo,
       numOfPrayerRequests: prayerRequestsNum,
-      // currentPrayerRequestNum: this.state.currentPrayerRequestNum + 1,
     });
-    console.log(`this.state.prayerTheme: ${this.state.prayerTheme}`);
-    console.log(`this.state.prayerList: ${this.state.prayerList}`);
-    console.log(
-      `this.state.numOfPrayerRequests: ${this.state.numOfPrayerRequests}`
-    );
-    console.log(
-      `this.state.currentPrayerRequestNum: ${this.state.currentPrayerRequestNum}`
-    );
   };
 
   skipToTheNextPrayerRequest = () => {
