@@ -17,10 +17,14 @@ class PrayerListReadScreen extends Component {
     this.state = {
       prayerTheme: "",
       prayerList: [],
+      onNumOfPrayerRequests: 0,
+      currentPrayerRequestNum: 0,
     };
 
     this.getPrayerListData = this.getPrayerListData.bind(this);
     this.getPrayersToDisplay = this.getPrayersToDisplay.bind(this);
+    this.skipToTheNextPrayerRequest =
+      this.skipToTheNextPrayerRequest.bind(this);
   }
 
   getPrayersToDisplay = (array) => {
@@ -38,16 +42,37 @@ class PrayerListReadScreen extends Component {
   getPrayerListData = async () => {
     const response = await ReadPrayerList.get("/prayerlists");
 
-    var prayerListInfo = response.data[0];
-    console.log(prayerListInfo);
+    let prayerListInfo = response.data[0];
 
-    var prayerInfo = prayerListInfo.prayerRequests[0];
-    var prayerThemeInfo = prayerInfo.shift();
+    let prayerRequestsNum = prayerListInfo.prayerRequests.length;
+
+    let prayerInfo =
+      prayerListInfo.prayerRequests[this.state.currentPrayerRequestNum];
+    let prayerThemeInfo = prayerInfo.splice(0, 1);
 
     this.setState({
       prayerTheme: prayerThemeInfo,
       prayerList: prayerInfo,
+      onNumOfPrayerRequests: prayerRequestsNum,
+      currentPrayerRequestNum: this.state.currentPrayerRequestNum + 1,
     });
+  };
+
+  skipToTheNextPrayerRequest = () => {
+    if (
+      this.state.onNumOfPrayerRequests == this.state.currentPrayerRequestNum
+    ) {
+      console.log(
+        `You've prayed through the prayer requests... {$this.state.onNumOfPrayerRequests}`
+      );
+    } else if (
+      this.state.onNumOfPrayerRequests > this.state.currentPrayerRequestNum
+    ) {
+      this.setState({
+        onNumOfPrayerRequests: this.state.onNumOfPrayerRequests + 1,
+      });
+      this.getPrayerListData();
+    }
   };
 
   componentDidMount() {
@@ -64,6 +89,10 @@ class PrayerListReadScreen extends Component {
             </Text>
             {this.getPrayersToDisplay(this.state.prayerList)}
           </View>
+          <Button
+            title="Next Prayer Request"
+            onPress={this.skipToTheNextPrayerRequest}
+          />
         </Card>
       </ScrollView>
     );
