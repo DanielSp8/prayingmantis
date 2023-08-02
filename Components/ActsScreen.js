@@ -1,12 +1,19 @@
 import React from "react";
 import { useState } from "react";
-import { View, StyleSheet, PanResponder, Button } from "react-native";
+import {
+  View,
+  StyleSheet,
+  PanResponder,
+  Button,
+  ImageBackground,
+} from "react-native";
 import { Card, Text } from "@rneui/themed";
 import { AdorationData } from "../docs/AdorationData";
 import { ConfessionData } from "../docs/ConfessionData";
 import { ThanksgivingData } from "../docs/ThanksgivingData";
 import { SupplicationData } from "../docs/SupplicationData";
 import { ActsExplained } from "../docs/ActsExplained";
+import RandomBackgroundNatureImage from "../docs/BackgroundNatureImages";
 
 const ActsScreen = () => {
   const actsData = [
@@ -52,27 +59,38 @@ const ActsScreen = () => {
   };
 
   return (
-    <View {...panResponder.panHandlers}>
-      <Card style={styles.cardItself}>
-        <Card.Title style={styles.cardTitle}>
-          {actsData[array][id].theme}
-        </Card.Title>
-        <Text>{ActsExplained[array]}</Text>
-      </Card>
-      <Card style={styles.cardItself}>
-        <Card.Title style={styles.cardTitle}>Verse:</Card.Title>
-        <Text style={styles.cardVerse}>{actsData[array][id].verse}</Text>
-        <Text style={styles.cardAddress}>{actsData[array][id].address}</Text>
-      </Card>
-      <Text style={styles.swipeComment}>
-        Swipe left or right on either of the above cards to view a different
-        one.
-      </Text>
-    </View>
+    <ImageBackground
+      source={RandomBackgroundNatureImage}
+      style={styles.backgroundImage}
+    >
+      <View {...panResponder.panHandlers}>
+        <Card style={styles.cardItself}>
+          <Card.Title style={styles.cardTitle}>
+            {actsData[array][id].theme}
+          </Card.Title>
+          <Text>{ActsExplained[array]}</Text>
+        </Card>
+        <Card style={styles.cardItself}>
+          <Card.Title style={styles.cardTitle}>Verse:</Card.Title>
+          <Text style={styles.cardVerse}>{actsData[array][id].verse}</Text>
+          <Text style={styles.cardAddress}>{actsData[array][id].address}</Text>
+        </Card>
+        <Text style={styles.swipeComment}>
+          Swipe left or right on either of the above cards to view a different
+          one.
+        </Text>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    opacity: 0.85,
+  },
   cardItself: {
     padding: 10,
     alignItems: "center",
@@ -91,6 +109,7 @@ const styles = StyleSheet.create({
   swipeComment: {
     textAlign: "center",
     fontSize: 12,
+    fontWeight: "bold",
   },
 });
 

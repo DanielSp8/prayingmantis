@@ -1,9 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import { View, StyleSheet, PanResponder } from "react-native";
+import { View, StyleSheet, PanResponder, ImageBackground } from "react-native";
 import { Card, Text } from "@rneui/themed";
 import { IdentityData } from "../docs/IdentityData";
 import { IdentityExplained } from "../docs/IdentityExplained";
+import RandomBackgroundNatureImage from "../docs/BackgroundNatureImages";
 
 const IdentityScreen = () => {
   const [id, setId] = useState(0);
@@ -40,28 +41,39 @@ const IdentityScreen = () => {
   };
 
   return (
-    <View {...panResponder.panHandlers}>
-      <Card style={styles.explanationCard}>
-        <Text style={styles.explanationText}>{IdentityExplained}</Text>
-      </Card>
-      <Card style={styles.cardItself}>
-        <Card.Title style={styles.cardTitle}>
-          {IdentityData[id].theme}
-        </Card.Title>
-        <Text style={styles.cardAffirmation}>
-          {IdentityData[id].affirmation}
+    <ImageBackground
+      source={RandomBackgroundNatureImage}
+      style={styles.backgroundImage}
+    >
+      <View {...panResponder.panHandlers}>
+        <Card style={styles.explanationCard}>
+          <Text style={styles.explanationText}>{IdentityExplained}</Text>
+        </Card>
+        <Card style={styles.cardItself}>
+          <Card.Title style={styles.cardTitle}>
+            {IdentityData[id].theme}
+          </Card.Title>
+          <Text style={styles.cardAffirmation}>
+            {IdentityData[id].affirmation}
+          </Text>
+          <Text style={styles.cardVerse}>{IdentityData[id].verse}</Text>
+          <Text style={styles.cardAddress}>{IdentityData[id].address}</Text>
+        </Card>
+        <Text style={styles.swipeComment}>
+          Swipe left or right on the above card to view a different one.
         </Text>
-        <Text style={styles.cardVerse}>{IdentityData[id].verse}</Text>
-        <Text style={styles.cardAddress}>{IdentityData[id].address}</Text>
-      </Card>
-      <Text style={styles.swipeComment}>
-        Swipe left or right on the above card to view a different one.
-      </Text>
-    </View>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    opacity: 0.85,
+  },
   explanationCard: {
     padding: 0,
     justifyContent: "space-evenly",
@@ -93,6 +105,7 @@ const styles = StyleSheet.create({
   swipeComment: {
     textAlign: "center",
     fontSize: 12,
+    fontWeight: "bold",
   },
 });
 
