@@ -99,14 +99,16 @@ class PrayerListReadScreen extends Component {
             </Text>
             {this.getPrayersToDisplay(this.state.prayerList)}
           </View>
-          <Button
-            title="Next Prayer Request"
-            onPress={this.skipToTheNextPrayerRequest}
-          />
-          <Button
-            title="Previous Prayer Request"
-            onPress={this.skipToThePreviousPrayerRequest}
-          />
+        </Card>
+
+        <Card>
+          <View style={styles.fixToText}>
+            <Button
+              title="Previous"
+              onPress={this.skipToThePreviousPrayerRequest}
+            />
+            <Button title="Next" onPress={this.skipToTheNextPrayerRequest} />
+          </View>
         </Card>
       </ScrollView>
     );
@@ -127,6 +129,10 @@ const styles = StyleSheet.create({
   prayerListText: {
     color: "blue",
     fontSize: 15,
+  },
+  fixToText: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });
 
