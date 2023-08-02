@@ -58,13 +58,15 @@ class UnreachedScreen extends Component {
       continent: unreached.Continent,
       language: unreached.OfficialLang,
       peopleNameInCountry: unreached.PeopNameInCountry,
-      peopleGroupPhoto: unreached.PeopleGroupPhotoURL,
+      peopleGroupPhoto: `require("${unreached.PeopleGroupPhotoURL}")`,
       primaryReligion: unreached.PrimaryReligion,
       summary: unreached.Summary,
       tenfortywindow: tenFortyWindowInfo,
       photoCredit: photoCredit,
       shouldShow: true,
     });
+
+    console.log(`peopleGroupPhoto: ${this.state.peopleGroupPhoto}`);
   };
 
   componentDidMount() {
@@ -88,9 +90,9 @@ class UnreachedScreen extends Component {
                 {this.state.peopleNameInCountry}
               </Text>
               <Image
+                source={this.state.peopleGroupPhoto}
                 style={styles.imageStyle}
                 resizeMode="contain"
-                source={{ uri: this.state.peopleGroupPhoto }}
               />
             </View>
             <Text style={styles.infoStyle}>{this.state.photoCredit}</Text>
