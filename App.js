@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, Button, ImageBackground } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  ImageBackground,
+} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as Animatable from "react-native-animatable";
@@ -19,25 +25,31 @@ const HomeScreen = ({ navigation }) => {
       >
         Praying Mantis
       </Animatable.Text>
-      <View style={styles.menuText}>
-        <Animatable.Text animation="fadeInLeft">Home Screen</Animatable.Text>
-
-        <Button
-          title="Prayer List"
+      <View style={styles.menuLayout}>
+        <Pressable
+          style={styles.eachButton}
           onPress={() => navigation.navigate("PrayerList")}
-        />
-        <Button
-          title="ACTS: Prayer Acronym"
+        >
+          <Text style={styles.text}>Prayer List</Text>
+        </Pressable>
+        <Pressable
+          style={styles.eachButton}
           onPress={() => navigation.navigate("Acts")}
-        />
-        <Button
-          title="Identity in Christ"
+        >
+          <Text style={styles.text}>ACTS: Prayer Model</Text>
+        </Pressable>
+        <Pressable
+          style={styles.eachButton}
           onPress={() => navigation.navigate("Identity")}
-        />
-        <Button
-          title="Unreached of the Day"
+        >
+          <Text style={styles.text}>Identity: Who are you?</Text>
+        </Pressable>
+        <Pressable
+          style={styles.eachButton}
           onPress={() => navigation.navigate("Unreached")}
-        />
+        >
+          <Text style={styles.text}>Unreached of the Day</Text>
+        </Pressable>
       </View>
     </ImageBackground>
   );
@@ -61,19 +73,34 @@ function App() {
 
 const styles = StyleSheet.create({
   backgroundImage: {
-    flex: 1,
     width: "100%",
     height: "100%",
-    justifyContent: "center",
     alignItems: "center",
     opacity: 0.7,
   },
-  menuText: {
-    flex: 1,
-    alignItems: "center",
-  },
   prayingMantisTitle: {
-    fontSize: 35,
+    fontSize: 45,
+    paddingTop: 25,
+    fontWeight: "bold",
+  },
+  menuLayout: {
+    paddingTop: 100,
+  },
+  eachButton: {
+    alignItems: "center",
+    Top: 20,
+    paddingVertical: 13,
+    paddingHorizontal: 32,
+    borderRadius: 8,
+    elevation: 3,
+    backgroundColor: "black",
+  },
+  text: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "bold",
+    color: "white",
+    letterSpacing: 0.5,
   },
 });
 

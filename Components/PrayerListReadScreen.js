@@ -126,11 +126,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
   },
-  prayerListTextHeading: {
-    color: "green",
-    fontSize: 18,
-    textAlign: "center",
-  },
   prayerListText: {
     color: "black",
     fontSize: 15,
