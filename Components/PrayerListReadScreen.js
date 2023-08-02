@@ -91,12 +91,13 @@ class PrayerListReadScreen extends Component {
 
   render() {
     return (
-      <ScrollView>
+      <View style={styles.container}>
         <Card>
           <View>
             <Text style={styles.textHeading}>
-              Person to pray for: {this.state.prayerTheme}
+              Praying for: {this.state.prayerTheme}
             </Text>
+            <Card.Divider />
             {this.getPrayersToDisplay(this.state.prayerList)}
           </View>
         </Card>
@@ -110,12 +111,16 @@ class PrayerListReadScreen extends Component {
             <Button title="Next" onPress={this.skipToTheNextPrayerRequest} />
           </View>
         </Card>
-      </ScrollView>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+  },
   textHeading: {
     color: "black",
     fontSize: 20,
@@ -127,8 +132,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   prayerListText: {
-    color: "blue",
+    color: "black",
     fontSize: 15,
+    textAlign: "center",
   },
   fixToText: {
     flexDirection: "row",
