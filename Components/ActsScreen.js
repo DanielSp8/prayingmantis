@@ -1,12 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import {
-  View,
-  StyleSheet,
-  PanResponder,
-  Button,
-  ImageBackground,
-} from "react-native";
+import { View, StyleSheet, PanResponder, ImageBackground } from "react-native";
 import { Card, Text } from "@rneui/themed";
 import { AdorationData } from "../docs/AdorationData";
 import { ConfessionData } from "../docs/ConfessionData";
@@ -114,7 +108,6 @@ const styles = StyleSheet.create({
   swipeComment: {
     textAlign: "center",
     fontSize: 12,
-    fontWeight: "bold",
     backgroundColor: "black",
     color: "white",
   },

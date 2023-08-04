@@ -118,6 +118,15 @@ class PrayerListScreen extends Component {
             </View>
           </Card>
         </View>
+
+        <Card>
+          <View>
+            <Button title="Create a New Prayer Request" />
+            <Button title="Edit This Prayer List" />
+            <Button title="Log an Answered Prayer!" />
+            <Button title="View Answered Prayers" />
+          </View>
+        </Card>
       </ImageBackground>
     );
   }

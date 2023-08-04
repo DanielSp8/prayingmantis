@@ -110,7 +110,6 @@ const styles = StyleSheet.create({
   swipeComment: {
     textAlign: "center",
     fontSize: 12,
-    fontWeight: "bold",
     backgroundColor: "black",
     color: "white",
   },
