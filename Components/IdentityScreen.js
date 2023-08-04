@@ -4,13 +4,18 @@ import { View, StyleSheet, PanResponder, ImageBackground } from "react-native";
 import { Card, Text } from "@rneui/themed";
 import { IdentityData } from "../docs/IdentityData";
 import { IdentityExplained } from "../docs/IdentityExplained";
-import RandomBackgroundNatureImage from "../docs/BackgroundNatureImages";
+import { BackgroundNatureImages } from "../docs/BackgroundNatureImages";
 
 const IdentityScreen = () => {
   const [id, setId] = useState(0);
 
   const isLeftSwipe = ({ dx }) => dx < -200;
   const isRightSwipe = ({ dx }) => dx > 200;
+
+  const RandomBackgroundNatureImage =
+    BackgroundNatureImages[
+      Math.floor(Math.random() * BackgroundNatureImages.length - 1) + 1
+    ];
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,

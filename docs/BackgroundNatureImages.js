@@ -1,4 +1,4 @@
-const BackgroundNatureImages = [
+export const BackgroundNatureImages = [
   require("../src/Images/NatureScenes/aBeautifulHike.jpg"),
   require("../src/Images/NatureScenes/aCrossInTheSky.jpg"),
   require("../src/Images/NatureScenes/aHomeInBeauty.jpg"),
@@ -39,4 +39,4 @@ const RandomBackgroundNatureImage =
     Math.floor(Math.random() * BackgroundNatureImages.length - 1) + 1
   ];
 
-export default RandomBackgroundNatureImage;
+// export default RandomBackgroundNatureImage;
