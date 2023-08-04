@@ -3,10 +3,9 @@ import { useState } from "react";
 import {
   View,
   StyleSheet,
-  PanResponder,
   Button,
-  ScrollView,
   ImageBackground,
+  Pressable,
 } from "react-native";
 import { Card, Text } from "@rneui/themed";
 import axios from "axios";
@@ -110,17 +109,29 @@ class PrayerListScreen extends Component {
 
           <Card>
             <View style={styles.fixToText}>
-              <Button
-                title="Previous"
+              <Pressable
+                style={styles.buttonNextAndPrev}
                 onPress={this.skipToThePreviousPrayerRequest}
-              />
-              <Button title="Next" onPress={this.skipToTheNextPrayerRequest} />
+              >
+                <Text>Previous</Text>
+              </Pressable>
+
+              <Pressable
+                style={styles.buttonNextAndPrev}
+                onPress={this.skipToTheNextPrayerRequest}
+              >
+                <Text>Next</Text>
+              </Pressable>
             </View>
           </Card>
         </View>
 
         <Card>
           <View>
+            <Pressable style={styles.bottomMenuButtons} onPress={} >
+              <Text>Create a New Prayer Request</Text>
+              </Pressable>
+            
             <Button title="Create a New Prayer Request" />
             <Button title="Edit This Prayer List" />
             <Button title="Log an Answered Prayer!" />
@@ -137,7 +148,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     alignItems: "center",
-    opacity: 0.7,
+    opacity: 0.85,
   },
   container: {
     flex: 1,
@@ -157,6 +168,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  buttonNextAndPrev: {
+    elevation: 3,
+    backgroundColor: "lightblue",
+    padding: 5,
+    borderRadius: 7,
+  },
+  bottomMenuButtons: {
+    elevation: 3,
+    backgroundColor: "lightblue",
+    padding: 5,
+    borderRadius: 7,
+  }
 });
 
 export default PrayerListScreen;
