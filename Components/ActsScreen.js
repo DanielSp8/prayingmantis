@@ -13,7 +13,7 @@ import { ConfessionData } from "../docs/ConfessionData";
 import { ThanksgivingData } from "../docs/ThanksgivingData";
 import { SupplicationData } from "../docs/SupplicationData";
 import { ActsExplained } from "../docs/ActsExplained";
-import RandomBackgroundNatureImage from "../docs/BackgroundNatureImages";
+import { BackgroundNatureImages } from "../docs/BackgroundNatureImages";
 
 const ActsScreen = () => {
   const actsData = [
@@ -28,6 +28,11 @@ const ActsScreen = () => {
 
   const isLeftSwipe = ({ dx }) => dx < -200;
   const isRightSwipe = ({ dx }) => dx > 200;
+
+  const RandomBackgroundNatureImage =
+    BackgroundNatureImages[
+      Math.floor(Math.random() * BackgroundNatureImages.length - 1) + 1
+    ];
 
   let increaseOrDecreaseArray = 0;
 
@@ -110,6 +115,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 12,
     fontWeight: "bold",
+    backgroundColor: "black",
+    color: "white",
   },
 });
 
