@@ -125,19 +125,6 @@ class PrayerListScreen extends Component {
             </View>
           </Card>
         </View>
-
-        <Card>
-          <View>
-            <Pressable style={styles.bottomMenuButtons} onPress={} >
-              <Text>Create a New Prayer Request</Text>
-              </Pressable>
-            
-            <Button title="Create a New Prayer Request" />
-            <Button title="Edit This Prayer List" />
-            <Button title="Log an Answered Prayer!" />
-            <Button title="View Answered Prayers" />
-          </View>
-        </Card>
       </ImageBackground>
     );
   }
@@ -174,12 +161,6 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 7,
   },
-  bottomMenuButtons: {
-    elevation: 3,
-    backgroundColor: "lightblue",
-    padding: 5,
-    borderRadius: 7,
-  }
 });
 
 export default PrayerListScreen;

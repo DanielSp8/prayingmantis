@@ -6,6 +6,7 @@ import {
   Pressable,
   ImageBackground,
 } from "react-native";
+import { Card } from "@rneui/themed";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as Animatable from "react-native-animatable";
@@ -14,6 +15,9 @@ import PrayerListScreen from "./Components/PrayerListScreen";
 import ActsScreen from "./Components/ActsScreen";
 import IdentityScreen from "./Components/IdentityScreen";
 import UnreachedScreen from "./Components/UnreachedScreen";
+import CreateNewPrayer from "./Components/PrayerItems/CreateNewPrayer";
+import EditPrayerList from "./Components/PrayerItems/EditPrayerList";
+import ViewAnsweredPrayers from "./Components/PrayerItems/ViewAnsweredPrayers";
 import RandomBackImage from "./docs/BackgroundMantisImages";
 
 const HomeScreen = ({ navigation }) => {
@@ -59,6 +63,30 @@ const HomeScreen = ({ navigation }) => {
           </Pressable>
         </View>
       </View>
+
+      <Card>
+        <Card.Title>Prayer List: Other Options</Card.Title>
+        <View>
+          <Pressable
+            style={styles.bottomMenuButtons}
+            onPress={() => navigation.navigate("CreateNewPrayer")}
+          >
+            <Text>Create a New Prayer Request</Text>
+          </Pressable>
+          <Pressable
+            style={styles.bottomMenuButtons}
+            onPress={() => navigation.navigate("EditPrayerList")}
+          >
+            <Text>Edit Prayer List</Text>
+          </Pressable>
+          <Pressable
+            style={styles.bottomMenuButtons}
+            onPress={() => navigation.navigate("ViewAnsweredPrayers")}
+          >
+            <Text>View Answered Prayers</Text>
+          </Pressable>
+        </View>
+      </Card>
     </ImageBackground>
   );
 };
@@ -74,6 +102,12 @@ function App() {
         <Stack.Screen name="Acts" component={ActsScreen} />
         <Stack.Screen name="Identity" component={IdentityScreen} />
         <Stack.Screen name="Unreached" component={UnreachedScreen} />
+        <Stack.Screen name="CreateNewPrayer" component={CreateNewPrayer} />
+        <Stack.Screen name="EditPrayerList" component={EditPrayerList} />
+        <Stack.Screen
+          name="ViewAnsweredPrayers"
+          component={ViewAnsweredPrayers}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -112,6 +146,16 @@ const styles = StyleSheet.create({
   },
   stylingButtonGroup: {
     marginVertical: 15,
+  },
+  bottomMenuButtons: {
+    alignItems: "center",
+    Top: 15,
+    paddingVertical: 7,
+    paddingHorizontal: 8,
+    borderRadius: 7,
+    elevation: 3,
+    backgroundColor: "gray",
+    padding: 5,
   },
 });
 
