@@ -58,15 +58,13 @@ class UnreachedScreen extends Component {
       continent: unreached.Continent,
       language: unreached.OfficialLang,
       peopleNameInCountry: unreached.PeopNameInCountry,
-      peopleGroupPhoto: `require("${unreached.PeopleGroupPhotoURL}")`,
+      peopleGroupPhoto: unreached.PeopleGroupPhotoURL,
       primaryReligion: unreached.PrimaryReligion,
       summary: unreached.Summary,
       tenfortywindow: tenFortyWindowInfo,
       photoCredit: photoCredit,
       shouldShow: true,
     });
-
-    console.log(`peopleGroupPhoto: ${this.state.peopleGroupPhoto}`);
   };
 
   componentDidMount() {
@@ -75,7 +73,7 @@ class UnreachedScreen extends Component {
 
   render() {
     return (
-      <ScrollView>
+      <ScrollView style={styles.container}>
         {this.state.shouldShow && (
           <Card>
             <View style={styles.viewOfPeopleGroup}>
@@ -90,7 +88,7 @@ class UnreachedScreen extends Component {
                 {this.state.peopleNameInCountry}
               </Text>
               <Image
-                source={this.state.peopleGroupPhoto}
+                source={{ uri: this.state.peopleGroupPhoto }}
                 style={styles.imageStyle}
                 resizeMode="contain"
               />
@@ -134,17 +132,14 @@ class UnreachedScreen extends Component {
 const styles = StyleSheet.create({
   headingText: {
     color: "white",
-    backgroundColor: "blue",
+    backgroundColor: "#4169e1",
     borderWidth: 1,
     borderColor: "black",
     alignSelf: "center",
     fontSize: 24,
   },
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: "#4169e1",
   },
   headings: {
     alignSelf: "center",
