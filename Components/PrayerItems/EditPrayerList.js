@@ -124,6 +124,7 @@ class EditPrayerList extends Component {
     const response = await ReadPrayerList.get("/prayerlists");
     const arrayNum = this.state.currentPrayerRequestNum;
 
+    console.log(arrayToUpdate);
     console.log(this.state.currentPrayerRequestNum);
     console.log(
       `response.data[0].prayerRequests[arrayNum]: ${response.data[0].prayerRequests[arrayNum]}`
