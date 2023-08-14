@@ -123,14 +123,12 @@ class EditPrayerList extends Component {
   updatePrayerListInMongo = async (arrayToUpdate) => {
     const response = await ReadPrayerList.get("/prayerlists");
     const arrayNum = this.state.currentPrayerRequestNum;
+    let oldPrayerRequests = response.data[0].prayerRequests;
+    oldPrayerRequests[arrayNum] = arrayToUpdate;
 
-    console.log(arrayToUpdate);
-    console.log(this.state.currentPrayerRequestNum);
-    console.log(
-      `response.data[0].prayerRequests[arrayNum]: ${response.data[0].prayerRequests[arrayNum]}`
-    );
+    console.log(`oldPrayerRequest ${oldPrayerRequests}`);
 
-    const update = await ReadPrayerList.put("/prayerlists", arrayToUpdate);
+    const update = await ReadPrayerList.put("/prayerlists", oldPrayerRequests);
   };
 
   componentDidMount() {
