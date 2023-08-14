@@ -31,6 +31,7 @@ class EditPrayerList extends Component {
     this.skipToThePreviousPrayerRequest =
       this.skipToThePreviousPrayerRequest.bind(this);
     this.updatePrayerListInMongo = this.updatePrayerListInMongo.bind(this);
+    this.deletePrayerRequestItem = this.deletePrayerRequestItem.bind(this);
   }
 
   getPrayersToDisplay = (array) => {
@@ -58,13 +59,23 @@ class EditPrayerList extends Component {
     const response = await ReadPrayerList.get("/prayerlists");
 
     let prayerListInfo = response.data[0];
-
     let prayerRequestsNum = prayerListInfo.prayerRequests.length - 1;
+    let thePrayerTheme = "";
+    let prayerInfo = [];
+    let prayerThemeInfo = [];
 
-    let prayerInfo =
-      prayerListInfo.prayerRequests[this.state.currentPrayerRequestNum];
-    let prayerThemeInfo = prayerInfo.splice(0, 1);
-    let thePrayerTheme = prayerThemeInfo.toString();
+    if (prayerRequestsNum < 0) {
+      thePrayerTheme = "No Prayer Requests Stored Yet";
+      prayerInfo = [
+        "Go back to the main menu",
+        "then add some prayer requests!",
+      ];
+    } else {
+      prayerInfo =
+        prayerListInfo.prayerRequests[this.state.currentPrayerRequestNum];
+      prayerThemeInfo = prayerInfo.splice(0, 1);
+      thePrayerTheme = prayerThemeInfo.toString();
+    }
 
     this.setState({
       prayerTheme: thePrayerTheme,
@@ -116,7 +127,6 @@ class EditPrayerList extends Component {
   updatePrayerRequestsAction = () => {
     let arrayToUpdate = this.state.prayerList;
     arrayToUpdate.unshift(this.state.prayerTheme);
-    console.log(arrayToUpdate);
     this.updatePrayerListInMongo(arrayToUpdate);
   };
 
@@ -126,9 +136,19 @@ class EditPrayerList extends Component {
     let oldPrayerRequests = response.data[0].prayerRequests;
     oldPrayerRequests[arrayNum] = arrayToUpdate;
 
-    console.log(`oldPrayerRequest ${oldPrayerRequests}`);
+    const update = await ReadPrayerList.put("/prayerlists", oldPrayerRequests);
+  };
+
+  deletePrayerRequestItem = async () => {
+    const response = await ReadPrayerList.get("/prayerlists");
+    let arrayNum = this.state.currentPrayerRequestNum;
+    let oldPrayerRequests = response.data[0].prayerRequests;
+    console.log(`arrayNum: ${arrayNum}`);
+    let elementToRemove = oldPrayerRequests.slice(arrayNum, 1);
 
     const update = await ReadPrayerList.put("/prayerlists", oldPrayerRequests);
+
+    this.getPrayerListData();
   };
 
   componentDidMount() {
@@ -162,7 +182,10 @@ class EditPrayerList extends Component {
               >
                 <Text style={styles.textButtons}>Update</Text>
               </Pressable>
-              <Pressable style={styles.buttonUpdateAndDelete}>
+              <Pressable
+                style={styles.buttonUpdateAndDelete}
+                onPress={this.deletePrayerRequestItem}
+              >
                 <Text style={styles.textButtons}>Delete</Text>
               </Pressable>
             </View>

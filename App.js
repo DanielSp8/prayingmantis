@@ -71,7 +71,7 @@ const HomeScreen = ({ navigation }) => {
             style={styles.bottomMenuButtons}
             onPress={() => navigation.navigate("CreateNewPrayer")}
           >
-            <Text>Create a New Prayer Request</Text>
+            <Text>Add New Prayer Request</Text>
           </Pressable>
           <Pressable
             style={styles.bottomMenuButtons}

@@ -46,15 +46,26 @@ class PrayerListScreen extends Component {
     const response = await ReadPrayerList.get("/prayerlists");
 
     let prayerListInfo = response.data[0];
-
     let prayerRequestsNum = prayerListInfo.prayerRequests.length - 1;
+    let thePrayerTheme = "";
+    let prayerInfo = [];
+    let prayerThemeInfo = [];
 
-    let prayerInfo =
-      prayerListInfo.prayerRequests[this.state.currentPrayerRequestNum];
-    let prayerThemeInfo = prayerInfo.splice(0, 1);
+    if (prayerRequestsNum < 0) {
+      thePrayerTheme = "No Prayer Requests Stored Yet";
+      prayerInfo = [
+        "Go back to the main menu",
+        "then add some prayer requests!",
+      ];
+    } else {
+      prayerInfo =
+        prayerListInfo.prayerRequests[this.state.currentPrayerRequestNum];
+      prayerThemeInfo = prayerInfo.splice(0, 1);
+      thePrayerTheme = prayerThemeInfo.toString();
+    }
 
     this.setState({
-      prayerTheme: prayerThemeInfo,
+      prayerTheme: thePrayerTheme,
       prayerList: prayerInfo,
       numOfPrayerRequests: prayerRequestsNum,
     });
