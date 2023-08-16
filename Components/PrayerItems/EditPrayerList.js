@@ -90,10 +90,6 @@ class EditPrayerList extends Component {
         currentPrayerRequestNum: this.state.currentPrayerRequestNum + 1,
       });
       this.getPrayerListData();
-    } else {
-      console.log(
-        `You've prayed through the prayer requests... ${this.state.currentPrayerRequestNum}`
-      );
     }
   };
 
@@ -103,10 +99,6 @@ class EditPrayerList extends Component {
         currentPrayerRequestNum: this.state.currentPrayerRequestNum - 1,
       });
       this.getPrayerListData();
-    } else {
-      console.log(
-        `You're at the beginning of your prayer requests: ${this.state.currentPrayerRequestNum}`
-      );
     }
   };
 
@@ -143,8 +135,7 @@ class EditPrayerList extends Component {
     const response = await ReadPrayerList.get("/prayerlists");
     let arrayNum = this.state.currentPrayerRequestNum;
     let oldPrayerRequests = response.data[0].prayerRequests;
-    console.log(`arrayNum: ${arrayNum}`);
-    let elementToRemove = oldPrayerRequests.slice(arrayNum, 1);
+    let elementToRemove = oldPrayerRequests.splice(arrayNum, 1);
 
     const update = await ReadPrayerList.put("/prayerlists", oldPrayerRequests);
 

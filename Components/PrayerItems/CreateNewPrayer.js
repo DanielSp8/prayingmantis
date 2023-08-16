@@ -19,7 +19,6 @@ class CreateNewPrayer extends Component {
     this.state = {
       prayerTheme: "",
       prayerList: ["Enter prayer request here"],
-      numOfPrayerRequests: 1,
     };
 
     this.getPrayersToDisplay = this.getPrayersToDisplay.bind(this);
@@ -27,6 +26,7 @@ class CreateNewPrayer extends Component {
     this.addPrayerRequest = this.addPrayerRequest.bind(this);
     this.updateForSave = this.updateForSave.bind(this);
     this.savePrayerRequest = this.savePrayerRequest.bind(this);
+    this.clearScreen = this.clearScreen.bind(this);
   }
 
   getPrayersToDisplay = (array) => {
@@ -81,6 +81,15 @@ class CreateNewPrayer extends Component {
       "/prayerlists",
       updatedPrayerRequests
     );
+
+    this.clearScreen();
+  };
+
+  clearScreen = () => {
+    this.setState({
+      prayerTheme: "",
+      prayerList: ["Enter prayer request here"],
+    });
   };
 
   render() {

@@ -77,10 +77,6 @@ class PrayerListScreen extends Component {
         currentPrayerRequestNum: this.state.currentPrayerRequestNum + 1,
       });
       this.getPrayerListData();
-    } else {
-      console.log(
-        `You've prayed through the prayer requests... ${this.state.currentPrayerRequestNum}`
-      );
     }
   };
 
@@ -90,10 +86,6 @@ class PrayerListScreen extends Component {
         currentPrayerRequestNum: this.state.currentPrayerRequestNum - 1,
       });
       this.getPrayerListData();
-    } else {
-      console.log(
-        `You're at the beginning of your prayer requests: ${this.state.currentPrayerRequestNum}`
-      );
     }
   };
 
