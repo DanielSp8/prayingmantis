@@ -1,14 +1,7 @@
 import React, { Component } from "react";
 import { useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Button,
-  ImageBackground,
-  Pressable,
-} from "react-native";
+import { View, StyleSheet, ImageBackground, Pressable } from "react-native";
 import { Card, Text } from "@rneui/themed";
-import axios from "axios";
 import ReadPrayerList from "../src/api/ReadPrayerList";
 import RandomBackgroundNatureImage from "../docs/BackgroundNatureImages02";
 

@@ -20,7 +20,6 @@ const IdentityScreen = () => {
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onPanResponderEnd: (e, gestureState) => {
-      // console.log("pan responder end", gestureState);
       if (isLeftSwipe(gestureState)) {
         advanceId();
       } else if (isRightSwipe(gestureState)) {
