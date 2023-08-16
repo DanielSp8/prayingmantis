@@ -11,13 +11,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as Animatable from "react-native-animatable";
 import PrayerListScreen from "./Components/PrayerListScreen";
-// import PrayerListScreen from "./Components/PrayerListScreen";
 import ActsScreen from "./Components/ActsScreen";
 import IdentityScreen from "./Components/IdentityScreen";
 import UnreachedScreen from "./Components/UnreachedScreen";
 import CreateNewPrayer from "./Components/PrayerItems/CreateNewPrayer";
 import EditPrayerList from "./Components/PrayerItems/EditPrayerList";
-import ViewAnsweredPrayers from "./Components/PrayerItems/ViewAnsweredPrayers";
 import RandomBackImage from "./docs/BackgroundMantisImages";
 
 const HomeScreen = ({ navigation }) => {
@@ -79,12 +77,6 @@ const HomeScreen = ({ navigation }) => {
           >
             <Text>Edit Prayer List</Text>
           </Pressable>
-          <Pressable
-            style={styles.bottomMenuButtons}
-            onPress={() => navigation.navigate("ViewAnsweredPrayers")}
-          >
-            <Text>View Answered Prayers</Text>
-          </Pressable>
         </View>
       </Card>
     </ImageBackground>
@@ -104,10 +96,6 @@ function App() {
         <Stack.Screen name="Unreached" component={UnreachedScreen} />
         <Stack.Screen name="CreateNewPrayer" component={CreateNewPrayer} />
         <Stack.Screen name="EditPrayerList" component={EditPrayerList} />
-        <Stack.Screen
-          name="ViewAnsweredPrayers"
-          component={ViewAnsweredPrayers}
-        />
       </Stack.Navigator>
     </NavigationContainer>
   );
