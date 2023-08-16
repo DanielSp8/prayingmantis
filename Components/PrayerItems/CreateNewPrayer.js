@@ -6,19 +6,82 @@ import {
   Button,
   ImageBackground,
   Pressable,
+  TextInput,
 } from "react-native";
 import { Card, Text } from "@rneui/themed";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import axios from "axios";
-// import ReadPrayerList from "../src/api/ReadPrayerList";
+import ReadPrayerList from "../../src/api/ReadPrayerList";
 import RandomBackgroundNatureImage from "../../docs/BackgroundNatureImages02";
 
 class CreateNewPrayer extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      prayerTheme: "",
+      prayerList: ["Enter prayer request here"],
+      numOfPrayerRequests: 1,
+    };
+
+    this.getPrayersToDisplay = this.getPrayersToDisplay.bind(this);
+    this.updateRequestsInState = this.updateRequestsInState.bind(this);
+    this.addPrayerRequest = this.addPrayerRequest.bind(this);
+    this.updateForSave = this.updateForSave.bind(this);
+    this.savePrayerRequest = this.savePrayerRequest.bind(this);
   }
+
+  getPrayersToDisplay = (array) => {
+    var i = -1;
+    return array.map((element) => {
+      i++;
+      return (
+        <View key={i}>
+          <TextInput
+            name={i}
+            placeholder={element}
+            onSubmitEditing={(text) => {
+              this.updateRequestsInState(element, text.nativeEvent.text);
+            }}
+            style={styles.prayerInputBox}
+          />
+          <Text></Text>
+        </View>
+      );
+    });
+  };
+
+  updateRequestsInState = (oldElement, newElement) => {
+    let iterationOfPrayerList = this.state.prayerList.indexOf(oldElement);
+    let updatedPrayerList = this.state.prayerList;
+    updatedPrayerList[iterationOfPrayerList] = newElement;
+
+    this.setState({
+      prayerList: updatedPrayerList,
+    });
+  };
+
+  addPrayerRequest = () => {
+    let updatedPrayerList = this.state.prayerList;
+    const elementText = "Enter prayer request here.";
+    updatedPrayerList.push(elementText);
+    this.setState({ prayerList: updatedPrayerList });
+  };
+
+  updateForSave = () => {
+    let arrayToUpdate = this.state.prayerList;
+    arrayToUpdate.unshift(this.state.prayerTheme);
+    this.savePrayerRequest(arrayToUpdate);
+  };
+
+  savePrayerRequest = async (arrayToUpdate) => {
+    const response = await ReadPrayerList.get("/prayerlists");
+    let updatedPrayerRequests = response.data[0].prayerRequests;
+    updatedPrayerRequests.push(arrayToUpdate);
+
+    const save = await ReadPrayerList.put(
+      "/prayerlists",
+      updatedPrayerRequests
+    );
+  };
 
   render() {
     return (
@@ -26,8 +89,36 @@ class CreateNewPrayer extends Component {
         source={RandomBackgroundNatureImage}
         style={styles.backgroundImage}
       >
-        <View>
-          <Text>This is a test of the Create New Prayer Component.</Text>
+        <View style={styles.container}>
+          <Card>
+            <View>
+              <Text style={styles.textHeading}>Enter Person to Pray for:</Text>
+              <TextInput
+                placeholder="Enter person here:"
+                value={this.state.prayerTheme}
+                onChangeText={(text) => this.setState({ prayerTheme: text })}
+              />
+              <Card.Divider />
+              {this.getPrayersToDisplay(this.state.prayerList)}
+            </View>
+          </Card>
+
+          <Card>
+            <View style={styles.fixToText}>
+              <Pressable
+                style={styles.buttonAddAndSave}
+                onPress={this.addPrayerRequest}
+              >
+                <Text style={styles.textButtons}>Add Prayer</Text>
+              </Pressable>
+              <Pressable
+                style={styles.buttonAddAndSave}
+                onPress={this.updateForSave}
+              >
+                <Text style={styles.textButtons}>Save Prayer</Text>
+              </Pressable>
+            </View>
+          </Card>
         </View>
       </ImageBackground>
     );
@@ -40,6 +131,25 @@ const styles = StyleSheet.create({
     height: "100%",
     alignItems: "center",
     opacity: 0.85,
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    width: 350,
+  },
+  prayerInputBox: {
+    color: "black",
+    fontSize: 12,
+  },
+  fixToText: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  buttonAddAndSave: {
+    elevation: 3,
+    backgroundColor: "lightblue",
+    padding: 5,
+    borderRadius: 7,
   },
 });
 

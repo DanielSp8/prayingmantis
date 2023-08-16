@@ -167,7 +167,9 @@ class EditPrayerList extends Component {
               <Text style={styles.textHeading}>Praying for:</Text>
               <TextInput
                 placeholder={this.state.prayerTheme}
-                onChangeText={(text) => this.updateTheme(text)}
+                onSubmitEditing={(text) =>
+                  this.updateTheme(text.nativeEvent.text)
+                }
               />
               <Card.Divider />
               {this.getPrayersToDisplay(this.state.prayerList)}
