@@ -10,6 +10,9 @@ import { Card } from "@rneui/themed";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as Animatable from "react-native-animatable";
+
+import SigninScreen from "./Components/SigninScreen";
+import SignupScreen from "./Components/SignupScreen";
 import PrayerListScreen from "./Components/PrayerListScreen";
 import ActsScreen from "./Components/ActsScreen";
 import IdentityScreen from "./Components/IdentityScreen";
@@ -86,6 +89,8 @@ const HomeScreen = ({ navigation }) => {
 const Stack = createNativeStackNavigator();
 
 function App() {
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
