@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import { View, StyleSheet, Text, Button } from "react-native";
 
 const SigninScreen = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  signupPress = async () => {
-    console.log("This is when the info is entered.");
+  signinPress = async () => {
+    console.log("This is when the button is clicked.");
   };
 
   return (
     <View>
       <Text>User Name:</Text>
-      <TextInput style={styles.input} onChangeText={setEmail} />
+      <TextInput style={styles.input} onChangeText={setUsername} />
       <Text>Password</Text>
       <TextInput
         style={styles.input}
@@ -20,7 +20,7 @@ const SigninScreen = () => {
         placeholder="Password"
         secureTextEntry={true}
       />
-      <Button title="Sign Up" onPress={() => signupPress} />
+      <Button title="Sign In" onPress={() => signinPress} />
     </View>
   );
 };
