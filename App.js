@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -10,9 +10,9 @@ import { Card } from "@rneui/themed";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as Animatable from "react-native-animatable";
+import ReadPrayerList from "./src/api/ReadPrayerList";
 
-import SigninScreen from "./Components/SigninScreen";
-import SignupScreen from "./Components/SignupScreen";
+import Login from "./Components/Login";
 import PrayerListScreen from "./Components/PrayerListScreen";
 import ActsScreen from "./Components/ActsScreen";
 import IdentityScreen from "./Components/IdentityScreen";
@@ -89,18 +89,40 @@ const HomeScreen = ({ navigation }) => {
 const Stack = createNativeStackNavigator();
 
 function App() {
+  // I will likely need to pass a prop into this function; it would be the username of the person logged in or signed up.
+  const [user, setUser] = useState(null);
   const [isSignedIn, setIsSignedIn] = useState(false);
+
+  useEffect(() => {
+    async function getIsSignedIn() {
+      // Write logic here for checking for a session token, etc.
+      // If there's a session, setIsSignedIn = true;
+    }
+    getIsSignedIn();
+  }, []);
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="PrayerList" component={PrayerListScreen} />
-        <Stack.Screen name="Acts" component={ActsScreen} />
-        <Stack.Screen name="Identity" component={IdentityScreen} />
-        <Stack.Screen name="Unreached" component={UnreachedScreen} />
-        <Stack.Screen name="CreateNewPrayer" component={CreateNewPrayer} />
-        <Stack.Screen name="EditPrayerList" component={EditPrayerList} />
+      <Stack.Navigator>
+        {isSignedIn ? (
+          <>
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="PrayerList" component={PrayerListScreen} />
+            <Stack.Screen name="Acts" component={ActsScreen} />
+            <Stack.Screen name="Identity" component={IdentityScreen} />
+            <Stack.Screen name="Unreached" component={UnreachedScreen} />
+            <Stack.Screen name="CreateNewPrayer" component={CreateNewPrayer} />
+            <Stack.Screen name="EditPrayerList" component={EditPrayerList} />
+          </>
+        ) : (
+          <>
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{ headerShown: false }}
+            />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
