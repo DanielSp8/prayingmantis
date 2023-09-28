@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { useState } from "react";
 import { View, StyleSheet, ImageBackground, Pressable } from "react-native";
 import { Card, Text } from "@rneui/themed";
 import ReadPrayerList from "../src/api/ReadPrayerList";
 import RandomBackgroundNatureImage from "../docs/BackgroundNatureImages02";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 class PrayerListScreen extends Component {
   constructor(props) {

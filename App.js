@@ -11,7 +11,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as Animatable from "react-native-animatable";
 import ReadPrayerList from "./src/api/ReadPrayerList";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Login from "./Components/Login";
 import PrayerListScreen from "./Components/PrayerListScreen";
 import ActsScreen from "./Components/ActsScreen";
@@ -93,10 +93,30 @@ function App() {
   const [user, setUser] = useState(null);
   const [isSignedIn, setIsSignedIn] = useState(false);
 
+  async function retrieveUserSession() {
+    try {
+      const theToken = await AsyncStorage.getItem("token");
+
+      if (theToken !== undefined) {
+        // Congrats! You've just retrieved your first value!
+        console.log("Congrats!");
+        setIsSignedIn(true);
+      } else {
+        console.log("undefined");
+        setIsSignedIn(false);
+      }
+    } catch (error) {
+      // There was an error on the native side
+      console.log(`There's an error.`);
+      console.log(error.message);
+    }
+  }
+
   useEffect(() => {
     async function getIsSignedIn() {
       // Write logic here for checking for a session token, etc.
       // If there's a session, setIsSignedIn = true;
+      retrieveUserSession();
     }
     getIsSignedIn();
   }, []);

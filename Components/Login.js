@@ -3,31 +3,51 @@ import {
   View,
   StyleSheet,
   Text,
-  Button,
   Pressable,
   TextInput,
   ActivityIndicator,
   KeyboardAvoidingView,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import ReadPrayerList from "../src/api/ReadPrayerList";
 
-const Login = () => {
+const Login = (navigate) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const moveTo = (screen) => {
+    navigate(screen);
+  };
+
+  async function storeData(token) {
+    try {
+      console.log(`token: ${token}`);
+      await AsyncStorage.setItem("token", token);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
   signIn = async () => {
     setLoading(true);
     try {
       //In this function, I need to login a user, etc.
-      //I'll need to verify if the username exists already.
       const loginResponse = await ReadPrayerList.post("/users/login", {
         username: username,
         password: password,
       });
 
       if ((loginResponse.data.status = "You are successfully logged in!")) {
-        return loginResponse.data.token;
+        const grabbedToken = loginResponse.data.token;
+        console.log(loginResponse.data.status);
+        // console.log(grabbedToken);
+        // setToken(grabbedToken);
+        // console.log(token);
+        storeData(grabbedToken);
+        console.log("attempting to move to home...");
+
+        moveTo("Home");
       }
       console.log(loginResponse.data);
     } catch (error) {
