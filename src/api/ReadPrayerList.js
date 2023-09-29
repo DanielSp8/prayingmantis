@@ -17,5 +17,6 @@ export default axios.create({
   baseURL: location,
   headers: {
     dataType: "application/json",
+    Authorization: `Bearer ${getToken}`,
   },
 });

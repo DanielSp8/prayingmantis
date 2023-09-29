@@ -21,7 +21,18 @@ class PrayerListScreen extends Component {
       this.skipToTheNextPrayerRequest.bind(this);
     this.skipToThePreviousPrayerRequest =
       this.skipToThePreviousPrayerRequest.bind(this);
+    this.getToken = this.getToken.bind(this);
   }
+
+  getToken = async () => {
+    try {
+      const jwtToken = await AsyncStorage.getItem("token");
+      return jwtToken;
+    } catch (error) {
+      console.error("Error getting token:", error);
+      return null;
+    }
+  };
 
   getPrayersToDisplay = (array) => {
     var i = 1;
@@ -36,32 +47,55 @@ class PrayerListScreen extends Component {
   };
 
   getPrayerListData = async () => {
-    const response = await ReadPrayerList.get("/prayerlists");
+    try {
+      const token = await this.getToken();
+      console.log(token);
+      if (token) {
+        const response = await ReadPrayerList.get(`prayerlists`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-    let prayerListInfo = response.data[0];
-    let prayerRequestsNum = prayerListInfo.prayerRequests.length - 1;
-    let thePrayerTheme = "";
-    let prayerInfo = [];
-    let prayerThemeInfo = [];
+        // Handle the response here
+        console.log("Response.data:", response.data);
 
-    if (prayerRequestsNum < 0) {
-      thePrayerTheme = "No Prayer Requests Stored Yet";
-      prayerInfo = [
-        "Go back to the main menu",
-        "then add some prayer requests!",
-      ];
-    } else {
-      prayerInfo =
-        prayerListInfo.prayerRequests[this.state.currentPrayerRequestNum];
-      prayerThemeInfo = prayerInfo.splice(0, 1);
-      thePrayerTheme = prayerThemeInfo.toString();
+        let prayerListInfo = response.data[0].prayerRequests;
+        console.log(`prayerListInfo: ${prayerListInfo}`);
+        let prayerRequestsNum = prayerListInfo.length - 1;
+        console.log(`prayerRequestsNum: ${prayerRequestsNum}`);
+        let thePrayerTheme = "";
+        let prayerInfo = [];
+        let prayerThemeInfo = [];
+
+        if (prayerRequestsNum < 0) {
+          thePrayerTheme = "No Prayer Requests Stored Yet";
+          prayerInfo = [
+            "Go back to the main menu",
+            "then add some prayer requests!",
+          ];
+        } else {
+          prayerInfo = prayerListInfo[this.state.currentPrayerRequestNum];
+          console.log(`prayerInfo: ${prayerInfo}`);
+          prayerThemeInfo = prayerListInfo.splice(0, 1);
+          console.log(`prayerThemeInfo: ${prayerThemeInfo}`);
+          thePrayerTheme = prayerThemeInfo.toString();
+          console.log(thePrayerTheme);
+
+          this.setState({
+            prayerTheme: thePrayerTheme,
+            prayerList: prayerInfo,
+            numOfPrayerRequests: prayerRequestsNum,
+          });
+        }
+      } else {
+        // Handle the case where there's no token (user not authenticated)
+        console.log("User is not authenticated");
+      }
+    } catch (error) {
+      // Handle request errors or authentication failures
+      console.error("Request error:", error);
     }
-
-    this.setState({
-      prayerTheme: thePrayerTheme,
-      prayerList: prayerInfo,
-      numOfPrayerRequests: prayerRequestsNum,
-    });
   };
 
   skipToTheNextPrayerRequest = () => {

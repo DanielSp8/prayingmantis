@@ -96,13 +96,27 @@ function App() {
   async function retrieveUserSession() {
     try {
       const theToken = await AsyncStorage.getItem("token");
-
-      if (theToken !== undefined) {
-        // Congrats! You've just retrieved your first value!
-        console.log("Congrats!");
-        setIsSignedIn(true);
+      console.log(`theToken: ${theToken}`);
+      if (theToken !== (undefined || null)) {
+        const response = await ReadPrayerList.get("prayerlists", {
+          headers: {
+            Authorization: `Bearer ${theToken}`,
+          },
+        });
+        if (
+          response ==
+          "Request error: [AxiosError: Request failed with status code 401]"
+        ) {
+          console.log(response);
+          console.log("Likely an invalid token!");
+          setIsSignedIn(false);
+        } else {
+          // Congrats! You've just retrieved your first value!
+          console.log("Congrats!");
+          setIsSignedIn(true);
+        }
       } else {
-        console.log("undefined");
+        console.log("undefined or null");
         setIsSignedIn(false);
       }
     } catch (error) {

@@ -47,7 +47,7 @@ const Login = (navigate) => {
         storeData(grabbedToken);
         console.log("attempting to move to home...");
 
-        moveTo("Home");
+        navigate("Home");
       }
       console.log(loginResponse.data);
     } catch (error) {
