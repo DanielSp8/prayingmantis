@@ -13,7 +13,7 @@ import * as Animatable from "react-native-animatable";
 import ReadPrayerList from "./src/api/ReadPrayerList";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Login from "./Components/Login";
-import PrayerListScreen from "./Components/PrayerListScreen";
+import DisplayPrayerList from "./Components/DisplayPrayerList";
 import ActsScreen from "./Components/ActsScreen";
 import IdentityScreen from "./Components/IdentityScreen";
 import UnreachedScreen from "./Components/UnreachedScreen";
@@ -141,7 +141,7 @@ function App() {
         {isSignedIn ? (
           <>
             <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="PrayerList" component={PrayerListScreen} />
+            <Stack.Screen name="PrayerList" component={DisplayPrayerList} />
             <Stack.Screen name="Acts" component={ActsScreen} />
             <Stack.Screen name="Identity" component={IdentityScreen} />
             <Stack.Screen name="Unreached" component={UnreachedScreen} />

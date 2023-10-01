@@ -2,26 +2,25 @@ import React, { Component } from "react";
 import { View, StyleSheet, ImageBackground, Pressable } from "react-native";
 import { Card, Text } from "@rneui/themed";
 import ReadPrayerList from "../src/api/ReadPrayerList";
-import { RandomBackgroundNatureImage } from "../docs/BackgroundNatureImages02";
+import RandomBackgroundNatureImage from "../docs/BackgroundNatureImages02";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-class PrayerListScreen extends Component {
+class DisplayPrayerList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      prayerTheme: "",
       prayerList: [],
       numOfPrayerRequests: 0,
       currentPrayerRequestNum: 0,
     };
 
+    this.getToken = this.getToken.bind(this);
     this.getPrayerListData = this.getPrayerListData.bind(this);
     this.getPrayersToDisplay = this.getPrayersToDisplay.bind(this);
     this.skipToTheNextPrayerRequest =
       this.skipToTheNextPrayerRequest.bind(this);
     this.skipToThePreviousPrayerRequest =
       this.skipToThePreviousPrayerRequest.bind(this);
-    this.getToken = this.getToken.bind(this);
   }
 
   getToken = async () => {
@@ -49,7 +48,6 @@ class PrayerListScreen extends Component {
   getPrayerListData = async () => {
     try {
       const token = await this.getToken();
-      console.log(token);
       if (token) {
         const response = await ReadPrayerList.get(`prayerlists`, {
           headers: {
@@ -57,16 +55,9 @@ class PrayerListScreen extends Component {
           },
         });
 
-        // Handle the response here
-        console.log("Response.data:", response.data);
-
-        let prayerListInfo = response.data[0].prayerRequests;
-        console.log(`prayerListInfo: ${prayerListInfo}`);
-        let prayerRequestsNum = prayerListInfo.length - 1;
-        console.log(`prayerRequestsNum: ${prayerRequestsNum}`);
-        let thePrayerTheme = "";
+        let prayerList = response.data[0].prayerRequests;
+        let prayerRequestsNum = prayerList.length - 1;
         let prayerRequests = [];
-        let prayerThemeInfo = [];
 
         if (prayerRequestsNum < 0) {
           thePrayerTheme = "No Prayer Requests Stored Yet";
@@ -75,21 +66,12 @@ class PrayerListScreen extends Component {
             "then add some prayer requests!",
           ];
         } else {
-          prayerRequests = prayerListInfo[this.state.currentPrayerRequestNum];
-          console.log(`prayerRequests: ${prayerRequests}`);
-          thePrayerTheme = prayerListInfo.splice(0, 1);
-          console.log(`prayerThemeInfo: ${prayerThemeInfo}`);
-          thePrayerTheme = thePrayerTheme.toString();
-          console.log(`thePrayerTheme: ${thePrayerTheme}`);
-          console.log(`prayerRequestsNum: ${prayerRequestsNum}`);
+          prayerRequests = prayerList[this.state.currentPrayerRequestNum];
 
           this.setState({
-            prayerTheme: thePrayerTheme,
             prayerList: prayerRequests,
             numOfPrayerRequests: prayerRequestsNum,
           });
-
-          console.log(`this.state.prayerList: ${this.state.prayerList}`);
         }
       } else {
         // Handle the case where there's no token (user not authenticated)
@@ -131,13 +113,7 @@ class PrayerListScreen extends Component {
       >
         <View style={styles.container}>
           <Card>
-            <View>
-              <Text style={styles.textHeading}>
-                Praying for: {this.state.prayerTheme}
-              </Text>
-              <Card.Divider />
-              {this.getPrayersToDisplay(this.state.prayerList)}
-            </View>
+            <View>{this.getPrayersToDisplay(this.state.prayerList)}</View>
           </Card>
 
           <Card>
@@ -174,14 +150,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
-  textHeading: {
-    color: "black",
-    fontSize: 20,
-    textAlign: "center",
-  },
   prayerListText: {
     color: "black",
-    fontSize: 15,
+    fontSize: 20,
     textAlign: "center",
   },
   fixToText: {
@@ -196,4 +167,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PrayerListScreen;
+export default DisplayPrayerList;
