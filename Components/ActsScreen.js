@@ -7,7 +7,7 @@ import { ConfessionData } from "../docs/ConfessionData";
 import { ThanksgivingData } from "../docs/ThanksgivingData";
 import { SupplicationData } from "../docs/SupplicationData";
 import { ActsExplained } from "../docs/ActsExplained";
-import { BackgroundNatureImages } from "../docs/BackgroundNatureImages";
+import RandomBackgroundNatureImage from "../docs/BackgroundNatureImages02";
 
 const ActsScreen = () => {
   const actsData = [
@@ -22,11 +22,6 @@ const ActsScreen = () => {
 
   const isLeftSwipe = ({ dx }) => dx < -200;
   const isRightSwipe = ({ dx }) => dx > 200;
-
-  const RandomBackgroundNatureImage =
-    BackgroundNatureImages[
-      Math.floor(Math.random() * BackgroundNatureImages.length - 1) + 1
-    ];
 
   let increaseOrDecreaseArray = 0;
 

@@ -128,7 +128,7 @@ class EditPrayerList extends Component {
     let oldPrayerRequests = response.data[0].prayerRequests;
     oldPrayerRequests[arrayNum] = arrayToUpdate;
 
-    const update = await ReadPrayerList.put("/prayerlists", oldPrayerRequests);
+    // const update = await ReadPrayerList.put("/prayerlists", oldPrayerRequests);
   };
 
   deletePrayerRequestItem = async () => {
@@ -137,7 +137,7 @@ class EditPrayerList extends Component {
     let oldPrayerRequests = response.data[0].prayerRequests;
     let elementToRemove = oldPrayerRequests.splice(arrayNum, 1);
 
-    const update = await ReadPrayerList.put("/prayerlists", oldPrayerRequests);
+    // const update = await ReadPrayerList.put("/prayerlists", oldPrayerRequests);
 
     this.getPrayerListData();
   };
