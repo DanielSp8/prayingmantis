@@ -8,16 +8,17 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
 } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ReadPrayerList from "../src/api/ReadPrayerList";
 
-const Login = (navigate) => {
+const Login = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const moveTo = (screen) => {
-    navigate(screen);
+    navigation.navigate(screen);
   };
 
   async function storeData(token) {
@@ -46,8 +47,7 @@ const Login = (navigate) => {
         // console.log(token);
         storeData(grabbedToken);
         console.log("attempting to move to home...");
-
-        navigate("Home");
+        navigation.navigate("HomeScreen", { screen: "HomeScreen" });
       }
       console.log(loginResponse.data);
     } catch (error) {

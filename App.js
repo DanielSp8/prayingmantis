@@ -22,6 +22,18 @@ import EditPrayerList from "./Components/PrayerItems/EditPrayerList";
 import RandomBackImage from "./docs/BackgroundMantisImages";
 
 const HomeScreen = ({ navigation }) => {
+  logout = async () => {
+    try {
+      // const logoutResponse = await ReadPrayerList.get("/users/logout");
+      // console.log(`logoutResponse: ${logoutResponse}`);
+      await AsyncStorage.removeItem("token");
+      navigation.navigate({ name: "Login" });
+    } catch (error) {
+      console.log(error);
+      alert("Logout failed: " + error.message);
+    }
+  };
+
   return (
     <ImageBackground source={RandomBackImage} style={styles.backgroundImage}>
       <Animatable.Text
@@ -82,13 +94,17 @@ const HomeScreen = ({ navigation }) => {
           </Pressable>
         </View>
       </Card>
+
+      <Pressable style={styles.logoutButton} onPress={logout}>
+        <Text>Logout</Text>
+      </Pressable>
     </ImageBackground>
   );
 };
 
 const Stack = createNativeStackNavigator();
 
-function App() {
+function App({ navigation }) {
   // I will likely need to pass a prop into this function; it would be the username of the person logged in or signed up.
   const [user, setUser] = useState(null);
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -140,11 +156,14 @@ function App() {
       <Stack.Navigator>
         {isSignedIn ? (
           <>
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="PrayerList" component={DisplayPrayerList} />
-            <Stack.Screen name="Acts" component={ActsScreen} />
-            <Stack.Screen name="Identity" component={IdentityScreen} />
-            <Stack.Screen name="Unreached" component={UnreachedScreen} />
+            <Stack.Screen name="HomeScreen" component={HomeScreen} />
+            <Stack.Screen
+              name="DisplayPrayerList"
+              component={DisplayPrayerList}
+            />
+            <Stack.Screen name="ActsScreen" component={ActsScreen} />
+            <Stack.Screen name="IdentityScreen" component={IdentityScreen} />
+            <Stack.Screen name="UnreachedScreen" component={UnreachedScreen} />
             <Stack.Screen name="CreateNewPrayer" component={CreateNewPrayer} />
             <Stack.Screen name="EditPrayerList" component={EditPrayerList} />
           </>
@@ -205,6 +224,9 @@ const styles = StyleSheet.create({
     elevation: 3,
     backgroundColor: "gray",
     padding: 5,
+  },
+  logoutButton: {
+    alignItem: "right",
   },
 });
 
