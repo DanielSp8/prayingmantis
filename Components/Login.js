@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ReadPrayerList from "../src/api/ReadPrayerList";
 
@@ -47,7 +48,7 @@ const Login = ({ navigation }) => {
         // console.log(token);
         storeData(grabbedToken);
         console.log("attempting to move to home...");
-        navigation.navigate("HomeScreen", { screen: "HomeScreen" });
+        navigation.navigate("HomeScreen");
       }
       console.log(loginResponse.data);
     } catch (error) {
