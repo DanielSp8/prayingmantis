@@ -7,7 +7,7 @@ import {
   ImageBackground,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import RandomBackImage from "./docs/BackgroundMantisImages";
+import RandomBackImage from "../docs/BackgroundMantisImages";
 import { Card } from "@rneui/themed";
 import * as Animatable from "react-native-animatable";
 
