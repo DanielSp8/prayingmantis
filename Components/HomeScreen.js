@@ -18,9 +18,7 @@ const HomeScreen = ({ navigation }) => {
 
   logout = async () => {
     try {
-      // const logoutResponse = await ReadPrayerList.get("/users/logout");
-      // console.log(`logoutResponse: ${logoutResponse}`);
-      await SecureStore.deleteItemAsync("token");
+      await SecureStore.deleteItemAsync("userToken");
       dispatch(signOut());
     } catch (error) {
       console.log(error);

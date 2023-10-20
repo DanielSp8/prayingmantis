@@ -6,7 +6,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useSelector } from "react-redux";
 import ReadPrayerList from "./src/api/ReadPrayerList";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
+import { signIn } from "./redux/reducers/authReducer.js";
+import { useDispatch } from "react-redux";
 import HomeScreen from "./Components/HomeScreen";
 import Login from "./Components/Login";
 import DisplayPrayerList from "./Components/DisplayPrayerList";
@@ -20,6 +22,27 @@ const AuthStack = createStackNavigator();
 const AppStack = createStackNavigator();
 
 function AppNavigator() {
+  const dispatch = useDispatch();
+
+  async function getToken() {
+    try {
+      const token = await SecureStore.getItemAsync("userToken");
+      if (token) {
+        console.log("Token retrieved:", token);
+        dispatch(signIn(token));
+      } else {
+        console.log("No token found");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error retrieving the token", error);
+    }
+  }
+
+  useEffect(() => {
+    getToken();
+  });
+
   // I will likely need to pass a prop into this function; it would be the username of the person logged in or signed up.
   // const [user, setUser] = useState(null);
   // const [isSignedIn, setIsSignedIn] = useState(false);
