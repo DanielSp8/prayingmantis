@@ -6,18 +6,22 @@ import {
   Pressable,
   ImageBackground,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
 import RandomBackImage from "../docs/BackgroundMantisImages";
 import { Card } from "@rneui/themed";
 import * as Animatable from "react-native-animatable";
+import { useDispatch } from "react-redux";
+import { signOut } from "../redux/reducers/authReducer";
 
 const HomeScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   logout = async () => {
     try {
       // const logoutResponse = await ReadPrayerList.get("/users/logout");
       // console.log(`logoutResponse: ${logoutResponse}`);
-      await AsyncStorage.removeItem("token");
-      navigation.navigate({ name: "Login" });
+      await SecureStore.deleteItemAsync("token");
+      dispatch(signOut());
     } catch (error) {
       console.log(error);
       alert("Logout failed: " + error.message);

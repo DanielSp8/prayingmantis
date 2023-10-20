@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import { signIn } from "../redux/reducers/authReducer";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
 import ReadPrayerList from "../src/api/ReadPrayerList";
 
 const Login = ({ navigation }) => {
@@ -25,7 +25,7 @@ const Login = ({ navigation }) => {
   async function storeData(token) {
     try {
       console.log(`token: ${token}`);
-      await AsyncStorage.setItem("token", token);
+      await SecureStore.setItemAsync("userToken", token);
     } catch (error) {
       console.log(error.message);
     }
@@ -41,6 +41,7 @@ const Login = ({ navigation }) => {
       });
 
       if (response.data && response.data.token) {
+        storeData(response.data.token);
         dispatch(signIn(response.data.token));
         Alert.alert("Login Successful!");
       } else {
