@@ -7,7 +7,10 @@ import {
   TextInput,
   ActivityIndicator,
   KeyboardAvoidingView,
+  Alert,
 } from "react-native";
+import { useDispatch } from "react-redux";
+import { signIn } from "../redux/reducers/authReducer";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -17,10 +20,7 @@ const Login = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const moveTo = (screen) => {
-    navigation.navigate(screen);
-  };
+  const dispatch = useDispatch();
 
   async function storeData(token) {
     try {
@@ -31,29 +31,23 @@ const Login = ({ navigation }) => {
     }
   }
 
-  signIn = async () => {
+  handleLogin = async () => {
     setLoading(true);
     try {
       //In this function, I need to login a user, etc.
-      const loginResponse = await ReadPrayerList.post("/users/login", {
+      const response = await ReadPrayerList.post("/users/login", {
         username: username,
         password: password,
       });
 
-      if ((loginResponse.data.status = "You are successfully logged in!")) {
-        const grabbedToken = loginResponse.data.token;
-        console.log(loginResponse.data.status);
-        // console.log(grabbedToken);
-        // setToken(grabbedToken);
-        // console.log(token);
-        storeData(grabbedToken);
-        console.log("attempting to move to home...");
-        navigation.navigate("HomeScreen");
+      if (response.data && response.data.token) {
+        dispatch(signIn(response.data.token));
+        Alert.alert("Login Successful!");
+      } else {
+        Alert.alert("Login failed!");
       }
-      console.log(loginResponse.data);
     } catch (error) {
-      console.log(error);
-      alert("Sign in failed: " + error.message);
+      Alert.alert("An error occurred: ", error.toString());
     } finally {
       setLoading(false);
     }
@@ -67,7 +61,7 @@ const Login = ({ navigation }) => {
         <TextInput
           value={username}
           style={styles.input}
-          placeholder="username"
+          placeholder="Username"
           autoCapitalize="none"
           onChangeText={setUsername}
         />
@@ -76,14 +70,14 @@ const Login = ({ navigation }) => {
           value={password}
           style={styles.input}
           onChangeText={setPassword}
-          placeholder="password"
+          placeholder="Password"
         />
 
         {loading ? (
           <ActivityIndicator size="large" color="#000ff" />
         ) : (
           <>
-            <Pressable onPress={signIn}>
+            <Pressable onPress={handleLogin}>
               <Text style={styles.buttons}>Login</Text>
             </Pressable>
 
