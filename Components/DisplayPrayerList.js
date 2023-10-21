@@ -3,7 +3,7 @@ import { View, StyleSheet, ImageBackground, Pressable } from "react-native";
 import { Card, Text } from "@rneui/themed";
 import ReadPrayerList from "../src/api/ReadPrayerList";
 import RandomBackgroundNatureImage from "../docs/BackgroundNatureImages02";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
 
 class DisplayPrayerList extends Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class DisplayPrayerList extends Component {
 
   getToken = async () => {
     try {
-      const jwtToken = await AsyncStorage.getItem("token");
+      const jwtToken = await SecureStore.getItemAsync("userToken");
       return jwtToken;
     } catch (error) {
       console.error("Error getting token:", error);
