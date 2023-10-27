@@ -7,6 +7,7 @@ import {
   Pressable,
   TextInput,
 } from "react-native";
+import * as SecureStore from "expo-secure-store";
 import { Card, Text } from "@rneui/themed";
 import ReadPrayerList from "../../src/api/ReadPrayerList";
 import RandomBackgroundNatureImage from "../../docs/BackgroundNatureImages02";
@@ -19,6 +20,7 @@ class CreateNewPrayer extends Component {
       prayerList: ["Enter prayer request here"],
     };
 
+    this.getToken = this.getToken.bind(this);
     this.getPrayersToDisplay = this.getPrayersToDisplay.bind(this);
     this.updateRequestsInState = this.updateRequestsInState.bind(this);
     this.addPrayerRequest = this.addPrayerRequest.bind(this);
@@ -26,6 +28,16 @@ class CreateNewPrayer extends Component {
     this.savePrayerRequest = this.savePrayerRequest.bind(this);
     this.clearScreen = this.clearScreen.bind(this);
   }
+
+  getToken = async () => {
+    try {
+      const jwtToken = await SecureStore.getItemAsync("userToken");
+      return jwtToken;
+    } catch (error) {
+      console.error("Error getting token:", error);
+      return null;
+    }
+  };
 
   getPrayersToDisplay = (array) => {
     var i = -1;
@@ -71,13 +83,24 @@ class CreateNewPrayer extends Component {
   };
 
   savePrayerRequest = async (arrayToUpdate) => {
-    const response = await ReadPrayerList.get("/prayerlists");
-    let updatedPrayerRequests = response.data[0].prayerRequests;
+    const token = await this.getToken();
+    const response = await ReadPrayerList.get("/prayerlists", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    let updatedPrayerRequests = response.data.prayerRequests;
     updatedPrayerRequests.push(arrayToUpdate);
 
+    console.log(`updatedPrayerRequests: ${updatedPrayerRequests}`);
     const save = await ReadPrayerList.put(
       "/prayerlists",
-      updatedPrayerRequests
+      updatedPrayerRequests,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
 
     this.clearScreen();
