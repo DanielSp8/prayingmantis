@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -14,6 +14,7 @@ import { signIn } from "../redux/reducers/authReducer";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as SecureStore from "expo-secure-store";
+import axios from "axios";
 import ReadPrayerList from "../src/api/ReadPrayerList";
 
 const Login = ({ navigation }) => {
@@ -21,6 +22,8 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+
+  const location = "http://192.168.1.184:3000";
 
   async function storeData(token) {
     try {
@@ -54,7 +57,34 @@ const Login = ({ navigation }) => {
     }
   };
 
-  signUp = async () => {};
+  const signUp = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await ReadPrayerList.post("/users/signup", {
+        username: username,
+        password: password,
+      });
+
+      console.log(response.data);
+      if (response.status === 200) {
+        const { token } = response.data;
+
+        // Store the token securely in SecureStore
+        await SecureStore.setItemAsync("userToken", token);
+
+        // TODO: Navigate to the authenticated part of your app
+        dispatch(signIn(token));
+      } else {
+        // Handle registration error
+        console.error("Registration failed");
+        Alert.alert(response.data.message);
+      }
+    } catch (error) {
+      console.error("Error during registration:", error.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [username, password]);
 
   return (
     <View style={styles.container}>

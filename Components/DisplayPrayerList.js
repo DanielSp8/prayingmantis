@@ -55,7 +55,7 @@ class DisplayPrayerList extends Component {
           },
         });
 
-        let prayerList = response.data[0].prayerRequests;
+        let prayerList = response.data.prayerRequests;
         let prayerRequestsNum = prayerList.length - 1;
         let prayerRequests = [];
 

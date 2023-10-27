@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   authLoading,
   signIn,
+  signOut,
   authError,
   clearErrors,
 } from "../reducers/authReducer";

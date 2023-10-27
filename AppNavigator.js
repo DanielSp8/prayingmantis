@@ -7,7 +7,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { useSelector } from "react-redux";
 import ReadPrayerList from "./src/api/ReadPrayerList";
 import * as SecureStore from "expo-secure-store";
-import { signIn } from "./redux/reducers/authReducer.js";
+import { signIn, signOut } from "./redux/reducers/authReducer.js";
 import { useDispatch } from "react-redux";
 import HomeScreen from "./Components/HomeScreen";
 import Login from "./Components/Login";
