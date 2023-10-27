@@ -60,11 +60,12 @@ class DisplayPrayerList extends Component {
         let prayerRequests = [];
 
         if (prayerRequestsNum < 0) {
-          thePrayerTheme = "No Prayer Requests Stored Yet";
           prayerRequests = [
+            "No Prayer Requests Stored Yet",
             "Go back to the main menu",
             "then add some prayer requests!",
           ];
+          this.setState({ prayerList: prayerRequests });
         } else {
           prayerRequests = prayerList[this.state.currentPrayerRequestNum];
 
