@@ -1,9 +1,7 @@
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 
-// const location = "http://192.168.1.184:3000";
-
-const location = "http://192.168.1.16:3000";
+const location = "http://192.168.1.184:3000";
 
 const getToken = async () => {
   try {

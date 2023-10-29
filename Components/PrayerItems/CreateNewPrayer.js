@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -17,7 +16,8 @@ class CreateNewPrayer extends Component {
     super(props);
     this.state = {
       prayerTheme: "",
-      prayerList: ["Enter prayer request here"],
+      prayerRequests: [{ id: 0, text: "" }],
+      nextId: 1,
     };
 
     this.getToken = this.getToken.bind(this);
@@ -27,7 +27,12 @@ class CreateNewPrayer extends Component {
     this.updateForSave = this.updateForSave.bind(this);
     this.savePrayerRequest = this.savePrayerRequest.bind(this);
     this.clearScreen = this.clearScreen.bind(this);
+    this.objectToArray = this.objectToArray.bind(this);
   }
+
+  objectToArray = (obj) => {
+    return Object.values(obj);
+  };
 
   getToken = async () => {
     try {
@@ -39,44 +44,40 @@ class CreateNewPrayer extends Component {
     }
   };
 
-  getPrayersToDisplay = (array) => {
-    var i = -1;
-    return array.map((element) => {
-      i++;
-      return (
-        <View key={i}>
-          <TextInput
-            name={i}
-            placeholder={element}
-            onSubmitEditing={(text) => {
-              this.updateRequestsInState(element, text.nativeEvent.text);
-            }}
-            style={styles.prayerInputBox}
-          />
-          <Text></Text>
-        </View>
-      );
-    });
+  getPrayersToDisplay = () => {
+    return this.state.prayerRequests.map(({ id, text }) => (
+      <View key={id}>
+        <TextInput
+          placeholder="Enter prayer request here."
+          value={text}
+          onChangeText={(newText) => this.updateRequestsInState(id, newText)}
+          style={styles.prayerInputBox}
+        />
+        <Text></Text>
+      </View>
+    ));
   };
 
-  updateRequestsInState = (oldElement, newElement) => {
-    let iterationOfPrayerList = this.state.prayerList.indexOf(oldElement);
-    let updatedPrayerList = this.state.prayerList;
-    updatedPrayerList[iterationOfPrayerList] = newElement;
-
-    this.setState({
-      prayerList: updatedPrayerList,
-    });
+  updateRequestsInState = (id, newText) => {
+    this.setState((prevState) => ({
+      prayerRequests: prevState.prayerRequests.map((prayer) =>
+        prayer.id === id ? { ...prayer, text: newText } : prayer
+      ),
+    }));
   };
 
   addPrayerRequest = () => {
-    let updatedPrayerList = this.state.prayerList;
-    const elementText = "Enter prayer request here.";
-    updatedPrayerList.push(elementText);
-    this.setState({ prayerList: updatedPrayerList });
+    this.setState((prevState) => ({
+      prayerRequests: [
+        ...prevState.prayerRequests,
+        { id: prevState.nextId, text: "" },
+      ],
+      nextId: prevState.nextId + 1,
+    }));
   };
 
   updateForSave = () => {
+    console.log(`this.state.prayerRequests: ${this.state.prayerRequests}`);
     let arrayToUpdate = this.state.prayerList;
     arrayToUpdate.unshift(this.state.prayerTheme);
     this.savePrayerRequest(arrayToUpdate);
