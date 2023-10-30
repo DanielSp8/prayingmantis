@@ -77,9 +77,10 @@ class CreateNewPrayer extends Component {
   };
 
   updateForSave = () => {
-    console.log(`this.state.prayerRequests: ${this.state.prayerRequests}`);
-    let arrayToUpdate = this.state.prayerList;
-    arrayToUpdate.unshift(this.state.prayerTheme);
+    // Extracting prayer texts from the prayerRequests state variable
+    const prayerTexts = this.state.prayerRequests.map((prayer) => prayer.text);
+    // Combining prayerTheme and prayerTexts into a single array
+    let arrayToUpdate = [this.state.prayerTheme, ...prayerTexts];
     this.savePrayerRequest(arrayToUpdate);
   };
 
@@ -110,7 +111,8 @@ class CreateNewPrayer extends Component {
   clearScreen = () => {
     this.setState({
       prayerTheme: "",
-      prayerList: ["Enter prayer request here"],
+      prayerRequests: [{ id: 0, text: "" }],
+      nextId: 1,
     });
   };
 
@@ -130,7 +132,7 @@ class CreateNewPrayer extends Component {
                 onChangeText={(text) => this.setState({ prayerTheme: text })}
               />
               <Card.Divider />
-              {this.getPrayersToDisplay(this.state.prayerList)}
+              {this.getPrayersToDisplay()}
             </View>
           </Card>
 
