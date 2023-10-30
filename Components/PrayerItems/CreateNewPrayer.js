@@ -27,12 +27,7 @@ class CreateNewPrayer extends Component {
     this.updateForSave = this.updateForSave.bind(this);
     this.savePrayerRequest = this.savePrayerRequest.bind(this);
     this.clearScreen = this.clearScreen.bind(this);
-    this.objectToArray = this.objectToArray.bind(this);
   }
-
-  objectToArray = (obj) => {
-    return Object.values(obj);
-  };
 
   getToken = async () => {
     try {

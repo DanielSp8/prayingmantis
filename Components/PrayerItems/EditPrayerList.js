@@ -6,6 +6,7 @@ import {
   Pressable,
   TextInput,
 } from "react-native";
+import * as SecureStore from "expo-secure-store";
 import { Card, Text } from "@rneui/themed";
 import ReadPrayerList from "../../src/api/ReadPrayerList";
 import RandomBackgroundNatureImage from "../../docs/BackgroundNatureImages02";
@@ -20,6 +21,7 @@ class EditPrayerList extends Component {
       currentPrayerRequestNum: 0,
     };
 
+    this.getToken = this.getToken.bind(this);
     this.getPrayerListData = this.getPrayerListData.bind(this);
     this.getPrayersToDisplay = this.getPrayersToDisplay.bind(this);
     this.updateTheme = this.updateTheme.bind(this);
@@ -33,6 +35,16 @@ class EditPrayerList extends Component {
     this.updatePrayerListInMongo = this.updatePrayerListInMongo.bind(this);
     this.deletePrayerRequestItem = this.deletePrayerRequestItem.bind(this);
   }
+
+  getToken = async () => {
+    try {
+      const jwtToken = await SecureStore.getItemAsync("userToken");
+      return jwtToken;
+    } catch (error) {
+      console.error("Error getting token:", error);
+      return null;
+    }
+  };
 
   getPrayersToDisplay = (array) => {
     var i = -1;
@@ -56,10 +68,19 @@ class EditPrayerList extends Component {
   };
 
   getPrayerListData = async () => {
-    const response = await ReadPrayerList.get("/prayerlists");
+    const token = await this.getToken();
 
-    let prayerListInfo = response.data[0];
-    let prayerRequestsNum = prayerListInfo.prayerRequests.length - 1;
+    const response = await ReadPrayerList.get("/prayerlists", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log(`response: ${response}`);
+    let prayerListInfo = response.data.prayerRequests;
+    console.log(`prayerListInfo: ${prayerListInfo}`);
+    let prayerRequestsNum = prayerListInfo.length - 1;
+    console.log(`prayerRequestsNum: ${prayerRequestsNum}`);
     let thePrayerTheme = "";
     let prayerInfo = [];
     let prayerThemeInfo = [];
@@ -71,8 +92,7 @@ class EditPrayerList extends Component {
         "then add some prayer requests!",
       ];
     } else {
-      prayerInfo =
-        prayerListInfo.prayerRequests[this.state.currentPrayerRequestNum];
+      prayerInfo = prayerListInfo[this.state.currentPrayerRequestNum];
       prayerThemeInfo = prayerInfo.splice(0, 1);
       thePrayerTheme = prayerThemeInfo.toString();
     }
@@ -108,7 +128,7 @@ class EditPrayerList extends Component {
 
   updateRequestsInState = (oldElement, newElement) => {
     let iterationOfPrayerList = this.state.prayerList.indexOf(oldElement);
-    let updatedPrayerList = this.state.prayerList;
+    let updatedPrayerList = [...this.state.prayerList];
     updatedPrayerList[iterationOfPrayerList] = newElement;
 
     this.setState({
@@ -117,26 +137,42 @@ class EditPrayerList extends Component {
   };
 
   updatePrayerRequestsAction = () => {
-    let arrayToUpdate = this.state.prayerList;
+    let arrayToUpdate = [...this.state.prayerList];
     arrayToUpdate.unshift(this.state.prayerTheme);
+
+    console.log(`arrayToUpdate: ${arrayToUpdate}`);
     this.updatePrayerListInMongo(arrayToUpdate);
   };
 
   updatePrayerListInMongo = async (arrayToUpdate) => {
-    const response = await ReadPrayerList.get("/prayerlists");
+    const token = await this.getToken();
+
+    const response = await ReadPrayerList.get("/prayerlists", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const arrayNum = this.state.currentPrayerRequestNum;
-    let oldPrayerRequests = response.data[0].prayerRequests;
+    let oldPrayerRequests = response.data.prayerRequests;
     oldPrayerRequests[arrayNum] = arrayToUpdate;
 
+    console.log(`oldPrayerRequests: ${oldPrayerRequests}`);
     // const update = await ReadPrayerList.put("/prayerlists", oldPrayerRequests);
   };
 
   deletePrayerRequestItem = async () => {
-    const response = await ReadPrayerList.get("/prayerlists");
+    const token = await this.getToken();
+
+    const response = await ReadPrayerList.get("/prayerlists", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     let arrayNum = this.state.currentPrayerRequestNum;
-    let oldPrayerRequests = response.data[0].prayerRequests;
+    let oldPrayerRequests = response.data.prayerRequests;
     let elementToRemove = oldPrayerRequests.splice(arrayNum, 1);
 
+    console.log(`oldPrayerRequests: ${oldPrayerRequests}`);
     // const update = await ReadPrayerList.put("/prayerlists", oldPrayerRequests);
 
     this.getPrayerListData();
