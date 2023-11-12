@@ -17,6 +17,7 @@ import IdentityScreen from "./Components/IdentityScreen";
 import UnreachedScreen from "./Components/UnreachedScreen";
 import CreateNewPrayer from "./Components/PrayerItems/CreateNewPrayer";
 import EditPrayerList from "./Components/PrayerItems/EditPrayerList";
+import { Buffer } from "buffer";
 
 const AuthStack = createStackNavigator();
 const AppStack = createStackNavigator();
@@ -24,12 +25,30 @@ const AppStack = createStackNavigator();
 function AppNavigator() {
   const dispatch = useDispatch();
 
+  logout = async () => {
+    try {
+      await SecureStore.deleteItemAsync("userToken");
+      dispatch(signOut());
+    } catch (error) {
+      console.log(error);
+      alert("Logout failed: " + error.message);
+    }
+  };
+
   async function getToken() {
     try {
       const token = await SecureStore.getItemAsync("userToken");
       if (token) {
         console.log("Token retrieved:", token);
-        dispatch(signIn(token));
+
+        // Decode the token and check for expiration
+        if (isTokenExpired(token)) {
+          console.log("Token has expired");
+          logout();
+          return null;
+        } else {
+          dispatch(signIn(token));
+        }
       } else {
         console.log("No token found");
         return null;
@@ -37,6 +56,17 @@ function AppNavigator() {
     } catch (error) {
       console.error("Error retrieving the token", error);
     }
+  }
+
+  function isTokenExpired(token) {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = Buffer.from(base64, "base64").toString("utf8");
+
+    const { exp } = JSON.parse(jsonPayload);
+    const currentTime = Date.now() / 1000;
+
+    return exp < currentTime;
   }
 
   useEffect(() => {

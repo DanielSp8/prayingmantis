@@ -47,17 +47,15 @@ class EditPrayerList extends Component {
   };
 
   getPrayersToDisplay = (array) => {
-    var i = -1;
-    return array.map((element) => {
-      i++;
-      // console.log(element);
+    return array.map((element, index) => {
       return (
-        <View key={i}>
+        <View key={index}>
           <TextInput
-            name={i}
+            name={index.toString()}
             placeholder={element}
-            onSubmitEditing={(text) => {
-              this.updateRequestsInState(element, text.nativeEvent.text);
+            value={element}
+            onChangeText={(text) => {
+              this.updateRequestsInState(index, text);
             }}
             style={styles.prayerInputBox}
           />
@@ -126,10 +124,9 @@ class EditPrayerList extends Component {
     this.setState({ prayerTheme: newTheme });
   };
 
-  updateRequestsInState = (oldElement, newElement) => {
-    let iterationOfPrayerList = this.state.prayerList.indexOf(oldElement);
+  updateRequestsInState = (index, newElement) => {
     let updatedPrayerList = [...this.state.prayerList];
-    updatedPrayerList[iterationOfPrayerList] = newElement;
+    updatedPrayerList[index] = newElement;
 
     this.setState({
       prayerList: updatedPrayerList,
@@ -157,7 +154,11 @@ class EditPrayerList extends Component {
     oldPrayerRequests[arrayNum] = arrayToUpdate;
 
     console.log(`oldPrayerRequests: ${oldPrayerRequests}`);
-    // const update = await ReadPrayerList.put("/prayerlists", oldPrayerRequests);
+    const update = await ReadPrayerList.put("/prayerlists", oldPrayerRequests, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   };
 
   deletePrayerRequestItem = async () => {
@@ -170,12 +171,25 @@ class EditPrayerList extends Component {
     });
     let arrayNum = this.state.currentPrayerRequestNum;
     let oldPrayerRequests = response.data.prayerRequests;
-    let elementToRemove = oldPrayerRequests.splice(arrayNum, 1);
-
     console.log(`oldPrayerRequests: ${oldPrayerRequests}`);
-    // const update = await ReadPrayerList.put("/prayerlists", oldPrayerRequests);
 
-    this.getPrayerListData();
+    const updatedPrayerRequests = oldPrayerRequests.filter(
+      (item, index) => index !== arrayNum
+    );
+
+    console.log(`updatedPrayerRequests: ${updatedPrayerRequests}`);
+
+    const update = await ReadPrayerList.put(
+      "/prayerlists",
+      updatedPrayerRequests,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    this.skipToThePreviousPrayerRequest();
   };
 
   componentDidMount() {
@@ -193,10 +207,9 @@ class EditPrayerList extends Component {
             <View>
               <Text style={styles.textHeading}>Praying for:</Text>
               <TextInput
-                placeholder={this.state.prayerTheme}
-                onSubmitEditing={(text) =>
-                  this.updateTheme(text.nativeEvent.text)
-                }
+                placeholder="Enter prayer theme"
+                value={this.state.prayerTheme}
+                onChangeText={(text) => this.updateTheme(text)}
               />
               <Card.Divider />
               {this.getPrayersToDisplay(this.state.prayerList)}
