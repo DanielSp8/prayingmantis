@@ -11,10 +11,7 @@ import {
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { signIn } from "../redux/reducers/authReducer";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as SecureStore from "expo-secure-store";
-import axios from "axios";
 import ReadPrayerList from "../src/api/ReadPrayerList";
 
 const Login = ({ navigation }) => {
@@ -27,7 +24,6 @@ const Login = ({ navigation }) => {
 
   async function storeData(token) {
     try {
-      console.log(`token: ${token}`);
       await SecureStore.setItemAsync("userToken", token);
     } catch (error) {
       console.log(error.message);
@@ -65,7 +61,6 @@ const Login = ({ navigation }) => {
         password: password,
       });
 
-      console.log(response.data);
       if (response.status === 200) {
         const { token } = response.data;
 

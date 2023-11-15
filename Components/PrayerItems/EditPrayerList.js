@@ -74,11 +74,8 @@ class EditPrayerList extends Component {
       },
     });
 
-    console.log(`response: ${response}`);
     let prayerListInfo = response.data.prayerRequests;
-    console.log(`prayerListInfo: ${prayerListInfo}`);
     let prayerRequestsNum = prayerListInfo.length - 1;
-    console.log(`prayerRequestsNum: ${prayerRequestsNum}`);
     let thePrayerTheme = "";
     let prayerInfo = [];
     let prayerThemeInfo = [];
@@ -137,7 +134,6 @@ class EditPrayerList extends Component {
     let arrayToUpdate = [...this.state.prayerList];
     arrayToUpdate.unshift(this.state.prayerTheme);
 
-    console.log(`arrayToUpdate: ${arrayToUpdate}`);
     this.updatePrayerListInMongo(arrayToUpdate);
   };
 
@@ -153,7 +149,6 @@ class EditPrayerList extends Component {
     let oldPrayerRequests = response.data.prayerRequests;
     oldPrayerRequests[arrayNum] = arrayToUpdate;
 
-    console.log(`oldPrayerRequests: ${oldPrayerRequests}`);
     const update = await ReadPrayerList.put("/prayerlists", oldPrayerRequests, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -171,13 +166,10 @@ class EditPrayerList extends Component {
     });
     let arrayNum = this.state.currentPrayerRequestNum;
     let oldPrayerRequests = response.data.prayerRequests;
-    console.log(`oldPrayerRequests: ${oldPrayerRequests}`);
 
     const updatedPrayerRequests = oldPrayerRequests.filter(
       (item, index) => index !== arrayNum
     );
-
-    console.log(`updatedPrayerRequests: ${updatedPrayerRequests}`);
 
     const update = await ReadPrayerList.put(
       "/prayerlists",

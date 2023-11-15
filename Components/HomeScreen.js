@@ -21,7 +21,6 @@ const HomeScreen = ({ navigation }) => {
       await SecureStore.deleteItemAsync("userToken");
       dispatch(signOut());
     } catch (error) {
-      console.log(error);
       alert("Logout failed: " + error.message);
     }
   };

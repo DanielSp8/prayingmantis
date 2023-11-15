@@ -89,7 +89,6 @@ class CreateNewPrayer extends Component {
     let updatedPrayerRequests = response.data.prayerRequests;
     updatedPrayerRequests.push(arrayToUpdate);
 
-    console.log(`updatedPrayerRequests: ${updatedPrayerRequests}`);
     const save = await ReadPrayerList.put(
       "/prayerlists",
       updatedPrayerRequests,
