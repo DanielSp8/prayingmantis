@@ -64,10 +64,8 @@ const Login = ({ navigation }) => {
       if (response.status === 200) {
         const { token } = response.data;
 
-        // Store the token securely in SecureStore
         await SecureStore.setItemAsync("userToken", token);
 
-        // TODO: Navigate to the authenticated part of your app
         dispatch(signIn(token));
       } else {
         // Handle registration error
