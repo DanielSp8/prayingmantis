@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { View, StyleSheet, ImageBackground, Pressable } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ImageBackground,
+  Pressable,
+  Alert,
+} from "react-native";
 import { Card, Text } from "@rneui/themed";
 import ReadPrayerList from "../src/api/ReadPrayerList";
 import RandomBackgroundNatureImage from "../docs/BackgroundNatureImages02";
@@ -75,12 +81,10 @@ class DisplayPrayerList extends Component {
           });
         }
       } else {
-        // Handle the case where there's no token (user not authenticated)
-        console.log("User is not authenticated");
+        Alert.alert("User is not authenticated");
       }
     } catch (error) {
-      // Handle request errors or authentication failures
-      console.error("Request error:", error);
+      Alert.alert("Request error: ", error);
     }
   };
 

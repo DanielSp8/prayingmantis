@@ -14,13 +14,11 @@ const LoadingScreen = () => {
 
         if (token) {
           dispatch(signInWithToken(token));
-          // You can also navigate to the main app if using a navigation library
         } else {
           dispatch();
         }
       } catch (error) {
         console.error("Error fetching token from storage:", error);
-        // Handle error. Maybe navigate to a login screen or show an error message.
       }
     };
 

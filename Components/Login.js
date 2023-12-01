@@ -20,8 +20,6 @@ const Login = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const location = "http://192.168.1.184:3000";
-
   async function storeData(token) {
     try {
       await SecureStore.setItemAsync("userToken", token);
@@ -33,7 +31,6 @@ const Login = ({ navigation }) => {
   handleLogin = async () => {
     setLoading(true);
     try {
-      //In this function, I need to login a user, etc.
       const response = await ReadPrayerList.post("/users/login", {
         username: username,
         password: password,
@@ -68,7 +65,6 @@ const Login = ({ navigation }) => {
 
         dispatch(signIn(token));
       } else {
-        // Handle registration error
         console.error("Registration failed");
         Alert.alert(response.data.message);
       }
