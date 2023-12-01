@@ -19,6 +19,6 @@
 ### It uses hand gestures to flip through virtual index cards.
 
 ## Daily Unreached People Group
-### I uses the Joshua Project API for this.
+### I used the Joshua Project API for this.
 ### It displays an unreached people group of the day,
 ### which has an image of a person in the people group, along with information about the specific people group.
